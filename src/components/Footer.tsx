@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, Instagram, Facebook, Youtube } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -20,23 +21,10 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="footer__brand">
             <div className="footer__logo">
-              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-                <circle cx="20" cy="20" r="18" stroke="url(#fLogoGrad)" strokeWidth="3"/>
-                <circle cx="20" cy="20" r="7" stroke="url(#fLogoGrad)" strokeWidth="2"/>
-                <line x1="20" y1="2" x2="20" y2="13" stroke="#E10600" strokeWidth="2"/>
-                <line x1="20" y1="27" x2="20" y2="38" stroke="#FFD400" strokeWidth="2"/>
-                <line x1="2" y1="20" x2="13" y2="20" stroke="#E10600" strokeWidth="2"/>
-                <line x1="27" y1="20" x2="38" y2="20" stroke="#FFD400" strokeWidth="2"/>
-                <defs>
-                  <linearGradient id="fLogoGrad" x1="0" y1="0" x2="40" y2="40">
-                    <stop stopColor="#E10600"/>
-                    <stop offset="1" stopColor="#FFD400"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+              <Image src="/logo.jpg" alt="SmartWheels Logo" width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} />
               <div>
                 <h4 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em', fontSize: '1.25rem' }}>
-                  Smart Wheels
+                  SmartWheels
                 </h4>
                 <span style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
                   Skating Academy
@@ -91,7 +79,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer__bottom">
-          <p>© {currentYear} Smart Wheels Skating Academy. All rights reserved.</p>
+          <p>© {currentYear} SmartWheels Skating Academy. All rights reserved.</p>
           <div className="footer__bottom-links">
             <Link href="#">Privacy Policy</Link>
             <Link href="#">Terms of Service</Link>

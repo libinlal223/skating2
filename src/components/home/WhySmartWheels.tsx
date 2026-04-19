@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Trophy, Zap, Target } from 'lucide-react';
+import { Trophy, Zap, Target, Users, Heart, TrendingUp } from 'lucide-react';
 
 const features = [
   {
@@ -24,6 +24,24 @@ const features = [
     description: 'Focused preparation for state, national, and international skating championships.',
     color: '#C0C0C0',
   },
+  {
+    icon: Users,
+    title: 'Classes for Ages 3+',
+    description: 'Safe and engaging learning environment specially designed for our youngest skaters.',
+    color: '#00A3FF',
+  },
+  {
+    icon: Heart,
+    title: 'Beginner Friendly',
+    description: 'Perfect for beginners starting their skating journey.',
+    color: '#FF00AF',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Step-by-Step Guide',
+    description: 'Start from zero – we guide every beginner step by step.',
+    color: '#00CC66',
+  },
 ];
 
 export default function WhySmartWheels() {
@@ -40,7 +58,7 @@ export default function WhySmartWheels() {
           transition={{ duration: 0.6 }}
         >
           <h2>
-            Why <span className="gradient-text">Smart Wheels</span>
+            Why <span className="gradient-text">SmartWheels</span>
           </h2>
           <div className="divider" />
           <p>What makes us the leading skating academy in the region</p>

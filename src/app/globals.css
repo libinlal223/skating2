@@ -1,4 +1,4 @@
-/* ===== SMART WHEELS SKATING ACADEMY – DESIGN SYSTEM ===== */
+/* ===== SMARTWHEELS SKATING ACADEMY – DESIGN SYSTEM ===== */
 /* --- Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap');
 
@@ -1195,10 +1195,6 @@ textarea.form-input {
   transition: all var(--transition-base);
 }
 
-.medals__card:hover {
-  transform: translateY(-8px);
-  background: var(--bg-card-hover);
-}
 
 .medals__icon {
   width: 100px;

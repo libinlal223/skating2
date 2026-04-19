@@ -29,7 +29,7 @@ export default function SkatingBanner() {
       {/* Parallax image */}
       <motion.div style={{ position: 'absolute', inset: '-10%', y }}>
         <Image
-          src="/skating_action.png"
+          src="/skating_action_v2.PNG"
           alt="Professional roller skating in action"
           fill
           style={{ objectFit: 'cover', objectPosition: 'center 30%' }}

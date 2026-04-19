@@ -20,7 +20,7 @@ export default function CTASection() {
             Ready to Start Your Skating Journey?
           </h2>
           <p style={{ fontSize: '1.1rem', color: 'rgba(10,10,10,0.7)', maxWidth: 500, margin: '0 auto var(--space-5)', lineHeight: 1.7 }}>
-            Join hundreds of students who have transformed their skills with Smart Wheels Skating Academy.
+            Join hundreds of students who have transformed their skills with SmartWheels Skating Academy.
           </p>
           <a href="/contact" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, padding: 'var(--space-2) var(--space-5)',

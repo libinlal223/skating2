@@ -34,7 +34,6 @@ const medals = [
 export default function MedalShowcase() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <section className="medals section-padding" ref={ref}>
@@ -60,41 +59,22 @@ export default function MedalShowcase() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              onMouseEnter={() => setHoveredIndex(i)}
-              onMouseLeave={() => setHoveredIndex(null)}
             >
-              <motion.div
+              <div
                 className="medals__icon"
-                animate={hoveredIndex === i ? { rotateY: 360 } : { rotateY: 0 }}
-                transition={{ duration: 0.8, ease: 'easeInOut' }}
                 style={{
-                  boxShadow: hoveredIndex === i ? `0 0 60px ${medal.glow}` : 'none',
-                  borderColor: hoveredIndex === i ? medal.color : 'rgba(255,255,255,0.06)',
+                  borderColor: 'rgba(255,255,255,0.06)',
                 }}
               >
                 <span className="medals__emoji">
                   <Trophy size={64} color={medal.color} strokeWidth={1.5} />
                 </span>
-              </motion.div>
+              </div>
 
               <h3 className="medals__type" style={{ color: medal.color }}>{medal.type}</h3>
               <div className="medals__count">{medal.count} Medals</div>
 
-              <motion.div
-                className="medals__details"
-                initial={{ opacity: 0, height: 0 }}
-                animate={hoveredIndex === i ? { opacity: 1, height: 'auto' } : { opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="medals__detail-item">
-                  <span className="medals__detail-label">Competition</span>
-                  <span className="medals__detail-value">{medal.competition}</span>
-                </div>
-                <div className="medals__detail-item">
-                  <span className="medals__detail-label">Event</span>
-                  <span className="medals__detail-value">{medal.event}</span>
-                </div>
-              </motion.div>
+
             </motion.div>
           ))}
         </div>

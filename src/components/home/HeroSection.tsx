@@ -106,13 +106,13 @@ export default function HeroSection() {
         <div className="hero__bg-gradient" />
       </div>
 
-      <motion.div 
+      <motion.div
         className="hero__side-bg"
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Image 
+        <Image
           src={heroSideBg}
           alt="Hero Background"
           priority
@@ -125,43 +125,22 @@ export default function HeroSection() {
       <div className="hero__content container">
         <motion.div
           className="hero__text"
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          style={{ marginTop: '-4vh' }}
+        >
           <h1 className="hero__title">
-            Train Like a <span className="gradient-text">Champion.</span>
+            Train <span className="gradient-text">Hard.</span>
             <br />
-            Skate Like a <span className="gradient-text">Pro.</span>
+            <span className="gradient-text">Skate</span> Smart.<br>
+            </br>
+            BECOME A <span className="gradient-text">CHAMPION.</span>
           </h1>
 
-          <motion.p
-            className="hero__subtitle"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.0 }}
-          >
-            Professional skating training for all ages with certified coaches
-            and world-class facilities.
-          </motion.p>
 
-          <motion.div
-            className="hero__actions"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.2 }}
-          >
-            <a href="/contact" className="btn btn-primary hero__btn">
-              Admin Login
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <a href="/branches" className="btn btn-secondary hero__btn">
-              View Branches
-            </a>
-          </motion.div>
+
+
 
           {/* Stats bar */}
           <motion.div
@@ -204,7 +183,7 @@ export default function HeroSection() {
         <div className="hero__scroll-line" />
       </motion.div>
 
-      
+
     </section>
   );
 }

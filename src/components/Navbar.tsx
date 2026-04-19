@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -38,23 +39,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="navbar__logo">
           <div className="navbar__logo-icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
-              <circle cx="20" cy="20" r="7" stroke="url(#logoGrad)" strokeWidth="2" />
-              <line x1="20" y1="2" x2="20" y2="13" stroke="#E10600" strokeWidth="2" />
-              <line x1="20" y1="27" x2="20" y2="38" stroke="#FFD400" strokeWidth="2" />
-              <line x1="2" y1="20" x2="13" y2="20" stroke="#E10600" strokeWidth="2" />
-              <line x1="27" y1="20" x2="38" y2="20" stroke="#FFD400" strokeWidth="2" />
-              <defs>
-                <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                  <stop stopColor="#E10600" />
-                  <stop offset="1" stopColor="#FFD400" />
-                </linearGradient>
-              </defs>
-            </svg>
+            <Image src="/logo.jpg" alt="SmartWheels Logo" width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} />
           </div>
           <div className="navbar__logo-text">
-            <span className="navbar__logo-title">Smart Wheels</span>
+            <span className="navbar__logo-title">SmartWheels</span>
             <span className="navbar__logo-sub">Skating Academy</span>
           </div>
         </Link>

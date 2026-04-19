@@ -70,7 +70,7 @@ export default function LoadingScreen() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <span>Smart Wheels</span>
+              <span>SmartWheels</span>
             </motion.div>
           )}
 

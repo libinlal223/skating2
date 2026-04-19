@@ -6,8 +6,8 @@ import GuinnessRecord from '@/components/home/GuinnessRecord';
 import SkatingBanner from '@/components/home/SkatingBanner';
 import MedalShowcase from '@/components/home/MedalShowcase';
 import GalleryPreview from '@/components/home/GalleryPreview';
-import Timeline from '@/components/home/Timeline';
 import SkatingBanner2 from '@/components/home/SkatingBanner2';
+import ParentReviews from '@/components/home/ParentReviews';
 import CTASection from '@/components/home/CTASection';
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
       <MedalShowcase />
       <GalleryPreview />
       <SkatingBanner2 />
-      <Timeline />
+      <ParentReviews />
       <CTASection />
     </>
   );

@@ -30,7 +30,7 @@ export default function SkatingBanner2() {
       <motion.div style={{ position: 'absolute', inset: '-10%', y }}>
         <Image
           src="/skating_banner2.png"
-          alt="Smart Wheels students training together"
+          alt="SmartWheels students training together"
           fill
           style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
         />

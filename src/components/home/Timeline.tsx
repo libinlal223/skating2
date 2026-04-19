@@ -9,7 +9,7 @@ const events = [
   { year: '2021', title: 'Academy Expansion', desc: 'Opened 3 new branches across major cities in India', side: 'right' },
   { year: '2020', title: 'Online Training Launch', desc: 'Pioneered virtual skating training during challenging times', side: 'left' },
   { year: '2019', title: 'International Recognition', desc: 'Featured in Asian Skating Federation as emerging academy', side: 'right' },
-  { year: '2014', title: 'Academy Founded', desc: 'Smart Wheels Skating Academy established in Mumbai', side: 'left' },
+  { year: '2014', title: 'Academy Founded', desc: 'SmartWheels Skating Academy established in Mumbai', side: 'left' },
 ];
 
 export default function Timeline() {

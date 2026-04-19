@@ -428,7 +428,7 @@ export default function AdminDashboard() {
         {/* Sidebar Content: Logo + Menu */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-8)' }}>
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', margin: 0 }}>Smart Wheels</h2>
+            <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', margin: 0 }}>SmartWheels</h2>
             <div style={{ fontSize: '0.7rem', color: 'var(--accent-red)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Academy Admin</div>
           </div>
           <button onClick={() => setIsSidebarOpen(false)} className="md-hidden" style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}>

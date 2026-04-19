@@ -1,12 +1,12 @@
 'use client';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MapPin, User, Clock, Phone } from 'lucide-react';
+import { MapPin, Clock, Phone } from 'lucide-react';
 
 const branchData = [
-  { name: 'Mumbai Central', location: 'Mahalaxmi Sports Complex, Mumbai', coach: 'Coach Rajesh Kumar', timings: 'Mon-Sat: 6AM-8PM', phone: '+91 98765 43210', lat: 19.0176, lng: 72.8562 },
-  { name: 'Pune Branch', location: 'Shivaji Nagar Sports Arena, Pune', coach: 'Coach Priya Sharma', timings: 'Mon-Sat: 7AM-9PM', phone: '+91 98765 43211', lat: 18.5314, lng: 73.8446 },
-  { name: 'Delhi NCR', location: 'Connaught Place Sports Hub, Delhi', coach: 'Coach Amit Patel', timings: 'Mon-Sat: 6AM-8PM', phone: '+91 98765 43212', lat: 28.6315, lng: 77.2167 },
+  { name: 'Anchal', location: 'Market jn, Anchal, Kollam, Kerala 691306', timings: '06:00 AM - 08:00 PM', phone: '+91 9876543210', mapQuery: 'SMARTWHEELS+Skating+Academy,+Market+jn,+Anchal,+Kollam,+Kerala+691306', lat: 8.9288, lng: 76.9048 },
+  { name: 'Izyan Sports City Puthenkulam', location: 'Puthenkulam, Parippally, Kerala 691302', timings: '06:00 AM - 08:00 PM', phone: '+91 9876543211', mapQuery: 'Izyan+Sports+City+%26+Convention+Centre,+Puthenkulam,+Parippally,+Kerala+691302', lat: 8.8105, lng: 76.7323 },
+  { name: 'Kalluvathukkal', location: 'Kalluvathukkal, Kerala 691578', timings: '06:00 AM - 08:00 PM', phone: '+91 9876543212', mapQuery: 'SMARTWHEELS+Skating+Academy,+Kalluvathukkal,+Kerala+691578', lat: 8.8183, lng: 76.7454 },
 ];
 
 export default function BranchesPage() {
@@ -20,29 +20,42 @@ export default function BranchesPage() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 80%, rgba(255,212,0,0.06), transparent 60%)' }} />
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} style={{ textAlign: 'center', zIndex: 1 }}>
           <h1>Our <span className="gradient-text">Branches</span></h1>
-          <p style={{ color: 'var(--text-secondary)', maxWidth: 500, margin: 'var(--space-2) auto 0' }}>Find a Smart Wheels training center near you</p>
+          <p style={{ color: 'var(--text-secondary)', maxWidth: 500, margin: 'var(--space-2) auto 0' }}>Find a SmartWheels training center near you</p>
         </motion.div>
       </section>
 
-      {/* Map placeholder */}
+      {/* Map Embeds */}
       <section style={{ background: 'var(--bg-secondary)', padding: 'var(--space-6) var(--space-4)' }}>
         <div className="container">
-          <div style={{ width: '100%', height: 400, borderRadius: 'var(--radius-lg)', background: 'linear-gradient(135deg, rgba(225,6,0,0.08), rgba(255,212,0,0.04))', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.05 }}>
-              <svg viewBox="0 0 800 400" fill="none" style={{ width: '100%', height: '100%' }}>
-                <path d="M100 350 C200 200 300 300 400 200 C500 100 600 250 700 150" stroke="#E10600" strokeWidth="2" fill="none"/>
-                <path d="M50 300 C150 150 250 250 350 150 C450 50 550 200 750 100" stroke="#FFD400" strokeWidth="1.5" fill="none" strokeDasharray="5,5"/>
-              </svg>
-            </div>
-            {branchData.map((b, i) => (
-              <motion.div key={b.name} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.3 + i * 0.1, type: 'spring' }}
-                style={{ position: 'absolute', left: `${15 + i * 17}%`, top: `${30 + (i % 2 === 0 ? 0 : 20)}%` }}>
-                <div style={{ width: 16, height: 16, borderRadius: '50%', background: 'var(--accent-red)', boxShadow: '0 0 20px rgba(225,6,0,0.5)', cursor: 'pointer', transition: 'all 0.3s' }}
-                  title={b.name} />
-                <span style={{ position: 'absolute', top: -24, left: '50%', transform: 'translateX(-50%)', fontSize: '0.7rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', fontWeight: 500 }}>{b.name}</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
+            {branchData.map((branch, idx) => (
+              <motion.div 
+                key={branch.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                style={{ display: 'flex', flexDirection: 'column' }}
+              >
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: 'var(--space-3) var(--space-4)', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)', border: '1px solid rgba(255,255,255,0.06)', borderBottom: 'none' }}>
+                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
+                    {branch.name}
+                  </h3>
+                </div>
+                <div style={{ width: '100%', height: 350, borderBottomLeftRadius: 'var(--radius-lg)', borderBottomRightRadius: 'var(--radius-lg)', background: 'var(--bg-primary)', border: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+                  <iframe 
+                    src={`https://maps.google.com/maps?q=${branch.mapQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+                    width="100%" 
+                    height="100%" 
+                    frameBorder="0" 
+                    style={{ border: 0 }} 
+                    allowFullScreen 
+                    aria-hidden="false" 
+                    tabIndex={0}
+                  ></iframe>
+                </div>
               </motion.div>
             ))}
-            <MapPin size={48} strokeWidth={1} color="var(--accent-silver)" style={{ opacity: 0.2 }} />
           </div>
         </div>
       </section>
@@ -57,7 +70,6 @@ export default function BranchesPage() {
                 <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', letterSpacing: '0.06em', marginBottom: 'var(--space-3)', color: 'var(--text-primary)' }}>{b.name}</h3>
                 {[
                   { icon: MapPin, text: b.location },
-                  { icon: User, text: b.coach },
                   { icon: Clock, text: b.timings },
                   { icon: Phone, text: b.phone },
                 ].map((detail, j) => (

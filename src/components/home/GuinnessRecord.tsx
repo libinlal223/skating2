@@ -33,7 +33,7 @@ export default function GuinnessRecord() {
             We are incredibly proud of our student{' '}
             <span style={{ color: '#FFD400', fontWeight: 700 }}>Avanika</span>{' '}
             and her dedicated coach{' '}
-            <span style={{ color: '#FFD400', fontWeight: 700 }}>Coach Abhi</span>{' '}
+            <span style={{ color: '#FFD400', fontWeight: 700 }}>Coach Afi</span>{' '}
             for securing a Guinness World Record — honored personally by the{' '}
             <span style={{ color: '#FFD400', fontWeight: 700 }}>Hon&apos;ble Chief Minister of Kerala, Shri Pinarayi Vijayan</span>,
             {' '}and respected state ministers of Kerala.
@@ -52,8 +52,8 @@ export default function GuinnessRecord() {
           >
             <div style={{ position: 'relative', aspectRatio: '3/4', width: '100%' }}>
               <Image
-                src="/guinness/guinness_main_cm_1773495636214.png"
-                alt="Avanika and Coach Abhi with Chief Minister Pinarayi Vijayan"
+                src="/guinness/imgb1.jpeg"
+                alt="Avanika and Coach Afi with Chief Minister Pinarayi Vijayan"
                 fill
                 style={{ objectFit: 'cover' }}
                 priority
@@ -74,7 +74,7 @@ export default function GuinnessRecord() {
                 </p>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   <span style={{ padding: '3px 10px', background: 'rgba(255,212,0,0.2)', border: '1px solid rgba(255,212,0,0.4)', borderRadius: '99px', fontSize: '0.75rem', color: '#FFD400', fontWeight: 600 }}>Avanika</span>
-                  <span style={{ padding: '3px 10px', background: 'rgba(225,6,0,0.2)', border: '1px solid rgba(225,6,0,0.4)', borderRadius: '99px', fontSize: '0.75rem', color: '#ff6b6b', fontWeight: 600 }}>Coach Abhi</span>
+                  <span style={{ padding: '3px 10px', background: 'rgba(225,6,0,0.2)', border: '1px solid rgba(225,6,0,0.4)', borderRadius: '99px', fontSize: '0.75rem', color: '#ff6b6b', fontWeight: 600 }}>Coach Afi</span>
                 </div>
               </div>
             </div>
@@ -83,10 +83,10 @@ export default function GuinnessRecord() {
           {/* 4 smaller portrait images in 2x2 grid */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
             {[
-              { src: 'guinness_minister_1_1773495658203.png', title: 'State Felicitation', person: 'Avanika', role: 'state ministers' },
-              { src: 'guinness_minister_2_1773495675576.png', title: 'Ministerial Honor', person: 'Avanika', role: 'Kerala ministers' },
-              { src: 'guinness_minister_3_1773495692932.png', title: 'Award Ceremony', person: 'Coach Abhi & Avanika', role: 'official event' },
-              { src: 'guinness_minister_4_1773495714273.png', title: 'Record Moment', person: 'Avanika', role: 'Guinness record' },
+              { src: 'imgb2.jpeg', title: 'State Felicitation', person: 'Avanika', role: 'state ministers' },
+              { src: 'imgb3.jpeg', title: 'Ministerial Honor', person: 'Avanika', role: 'Kerala ministers' },
+              { src: 'imgb4.jpeg', title: 'Award Ceremony', person: 'Coach Afi & Avanika', role: 'official event' },
+              { src: 'imgb5.jpeg', title: 'Record Moment', person: 'Avanika', role: 'Guinness record' },
             ].map((img, i) => (
               <motion.div
                 key={i}
@@ -127,7 +127,7 @@ export default function GuinnessRecord() {
         >
           {[
             { label: 'Student', name: 'Avanika', color: '#FFD400' },
-            { label: 'Coach', name: 'Coach Abhi', color: '#E10600' },
+            { label: 'Coach', name: 'Coach Afi', color: '#E10600' },
             { label: 'Honored By', name: 'CM Pinarayi Vijayan', color: '#C0C0C0' },
           ].map((item) => (
             <div key={item.name} style={{ textAlign: 'center', padding: 'var(--space-2) var(--space-4)', background: 'var(--bg-card)', border: `1px solid ${item.color}33`, borderRadius: 'var(--radius-lg)', minWidth: '180px' }}>

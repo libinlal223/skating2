@@ -2,28 +2,28 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MapPin, User, Clock, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Clock, ArrowRight } from 'lucide-react';
 
 const branches = [
   {
-    name: 'Mumbai Central',
-    location: 'Mahalaxmi Sports Complex, Mumbai',
-    coach: 'Coach Rajesh Kumar',
-    timings: 'Mon-Sat: 6AM - 8PM',
+    name: 'Anchal',
+    location: 'Market jn, Anchal, Kollam, Kerala 691306',
+    mobile: '+91 9876543210',
+    timings: '06:00 AM - 08:00 PM',
     color: '#E10600',
   },
   {
-    name: 'Pune Branch',
-    location: 'Shivaji Nagar Sports Arena, Pune',
-    coach: 'Coach Priya Sharma',
-    timings: 'Mon-Sat: 7AM - 9PM',
+    name: 'Izyan Sports City Puthenkulam',
+    location: 'Puthenkulam, Parippally, Kerala 691302',
+    mobile: '+91 9876543211',
+    timings: '06:00 AM - 08:00 PM',
     color: '#FFD400',
   },
   {
-    name: 'Delhi NCR',
-    location: 'Connaught Place Sports Hub, Delhi',
-    coach: 'Coach Amit Patel',
-    timings: 'Mon-Sat: 6AM - 8PM',
+    name: 'Kalluvathukkal',
+    location: 'Kalluvathukkal, Kerala 691578',
+    mobile: '+91 9876543212',
+    timings: '06:00 AM - 08:00 PM',
     color: '#C0C0C0',
   }
 ];
@@ -45,7 +45,7 @@ export default function BranchesSection() {
             Our <span className="gradient-text">Branches</span>
           </h2>
           <div className="divider" />
-          <p>Training centers across India with world-class facilities</p>
+          <p>Training centers across Kerala with Top-class facilities</p>
         </motion.div>
 
         <div className="branches__grid">
@@ -70,8 +70,8 @@ export default function BranchesSection() {
                   <span>{branch.location}</span>
                 </div>
                 <div className="branches__card-detail">
-                  <User size={14} />
-                  <span>{branch.coach}</span>
+                  <Phone size={14} />
+                  <span>{branch.mobile}</span>
                 </div>
                 <div className="branches__card-detail">
                   <Clock size={14} />
