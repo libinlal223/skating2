@@ -1,7 +1,8 @@
 'use client';
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Users, Zap, Target, Eye, Flame, Shield, TrendingUp, Heart, Globe, Star, Building } from 'lucide-react';
+import { getAllSchools, SchoolProfile } from '@/lib/schoolService';
 
 const programs = [
   { title: 'Beginner', level: 1, desc: 'Perfect for first-time skaters. Learn balance, basic movement, and safety fundamentals.', color: '#4CAF50', features: ['Basic stance & balance', 'Forward movement', 'Stopping techniques', 'Safety training'] },
@@ -18,31 +19,16 @@ const missionPoints = [
   { icon: Globe, color: '#C0C0C0', title: 'Champion Inclusivity', desc: 'Champion inclusivity and opportunity, ensuring every aspiring skater receives guidance, encouragement, and a platform to shine.' },
 ];
 
-const associatedSchools = [
-  "Vimala Central School, Karamcode",
-  "SN Public School, Chathannoor",
-  "SN Public School, Kizhavoor",
-  "ST. John's School, Anchal",
-  "Anand Bhavan Central School, Anchal",
-  "AG Public School, Kadakkal",
-  "ST. George Central School, Anchal",
-  "Grace International School, Mayyanad",
-  "Infant Jesus Central School, Thuvayoor",
-  "MGM Karuna Central School, Parippally",
-  "Scilore Sreeniketan Central School, Chathannoor",
-  "Sacred Heart School, Kureepuzha",
-  "Auxilium ISC School, Kottiyam"
-];
 
 const reviews = [
-  { name: 'Priya Menon', role: 'Parent of student', stars: 5, text: 'My daughter has transformed completely since joining SmartWheels. The coaches are incredibly patient and professional. She won her first district medal within 6 months!' },
+  { name: 'Priya Menon', role: 'Parent of student', stars: 5, text: 'My daughter has transformed completely since joining Smart Wheels. The coaches are incredibly patient and professional. She won her first district medal within 6 months!' },
   { name: 'Arjun Nair', role: 'Advanced Student', stars: 5, text: 'Train here for 2 years now. The training is world-class and Coach Abhi pushes you to be the best version of yourself. Best academy in Kerala!' },
-  { name: 'Reethu Krishnan', role: 'Parent of student', stars: 5, text: 'The discipline and confidence my son has gained here is priceless. SmartWheels is not just about skating — it shapes character.' },
+  { name: 'Reethu Krishnan', role: 'Parent of student', stars: 5, text: 'The discipline and confidence my son has gained here is priceless. Smart Wheels is not just about skating — it shapes character.' },
   { name: 'Sneha Das', role: 'Intermediate Student', stars: 5, text: 'I came in with zero experience and within a year I was competing at state level. The structured programs really work!' },
   { name: 'Anoop Varma', role: 'Parent of student', stars: 5, text: 'Incredible facilities, dedicated coaches, and a very nurturing environment. My kids absolutely love coming here every day.' },
-  { name: 'Meghna Pillai', role: 'Beginner Student', stars: 5, text: 'The best decision I made was joining SmartWheels. The community is so supportive and the coaches make learning fun and effective.' },
-  { name: 'Rahul Shenoy', role: 'Parent of student', stars: 5, text: "Avanika's Guinness World Record is proof of what SmartWheels can achieve. So proud to be part of this amazing academy family!" },
-  { name: 'Divya Suresh', role: 'Advanced Student', stars: 5, text: 'Training with Coach Abhi has been life-changing. The attention to detail and personalized coaching here is unlike anything else.' },
+  { name: 'Meghna Pillai', role: 'Beginner Student', stars: 5, text: 'The best decision I made was joining Smart Wheels. The community is so supportive and the coaches make learning fun and effective.' },
+  { name: 'Rahul Shenoy', role: 'Parent of student', stars: 5, text: "Avanika's Guinness World Record is proof of what Smart Wheels can achieve. So proud to be part of this amazing academy family!" },
+  { name: 'Divya Suresh', role: 'Advanced Student', stars: 5, text: 'Training with Coach Afi has been life-changing. The attention to detail and personalized coaching here is unlike anything else.' },
 ];
 
 export default function AboutPage() {
@@ -54,6 +40,16 @@ export default function AboutPage() {
   const inView4 = useInView(ref4, { once: true, margin: '-80px' });
   const inView5 = useInView(ref5, { once: true, margin: '-60px' });
 
+  const [schools, setSchools] = useState<SchoolProfile[]>([]);
+  const [schoolsLoading, setSchoolsLoading] = useState(true);
+
+  useEffect(() => {
+    getAllSchools().then(list => {
+      setSchools(list);
+      setSchoolsLoading(false);
+    }).catch(() => setSchoolsLoading(false));
+  }, []);
+
   return (
     <>
       {/* Hero */}
@@ -63,7 +59,7 @@ export default function AboutPage() {
           style={{ textAlign: 'center', position: 'relative', zIndex: 1, padding: 'var(--space-4)' }}>
           <h1 style={{ marginBottom: 'var(--space-3)' }}>Building <span className="gradient-text">Champions</span> on Wheels</h1>
           <p style={{ maxWidth: 600, margin: '0 auto', fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
-            SmartWheels has been transforming aspiring skaters into competitive athletes through world-class coaching and state-of-the-art facilities.
+            Smart Wheels has been transforming aspiring skaters into competitive athletes through world-class coaching and state-of-the-art facilities.
           </p>
         </motion.div>
       </section>
@@ -75,7 +71,7 @@ export default function AboutPage() {
             <div style={{ width: '100%', maxWidth: '350px', margin: '0 auto', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)' }}>
               <motion.img
                 src="/founder.jpeg"
-                alt="SmartWheels Founder"
+                alt="Smart Wheels Founder"
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />
             </div>
@@ -83,9 +79,14 @@ export default function AboutPage() {
           <motion.div initial={{ opacity: 0, x: 40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
             <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--accent-red)', letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>Our Story</span>
             <h2 style={{ margin: 'var(--space-2) 0 var(--space-3)' }}>Founder & <span className="gradient-text">Head Coach</span></h2>
-            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>Afi J - Founder & Head Coach</h3>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>Afi J - Founder &amp; Head Coach</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: 'var(--space-3)' }}>
+              {['B.P.Ed', 'M.P.Ed', 'NSNIS Certified Coach'].map(q => (
+                <span key={q} style={{ display: 'inline-flex', alignItems: 'center', padding: '4px 12px', background: 'rgba(225,6,0,0.1)', border: '1px solid rgba(225,6,0,0.3)', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-red)', letterSpacing: '0.06em', textTransform: 'uppercase' as const }}>{q}</span>
+              ))}
+            </div>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
-              SmartWheels Skating Academy was born from a vision to bring professional-level skating training to aspiring athletes across Kerala. What started as a single training center and has grown into a multi-city academy producing state and national champions.
+              Smart Wheels Skating Academy was born from a vision to bring professional-level skating training to aspiring athletes across Kerala. What started as a single training center and has grown into a multi-city academy producing state and national champions.
             </p>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
               Our founder, driven by decades of competitive skating experience, established a training methodology that combines international techniques with personalized coaching, creating a path to excellence for every student.
@@ -102,7 +103,7 @@ export default function AboutPage() {
             <h2 style={{ margin: 'var(--space-2) 0 var(--space-3)' }}>Managing <span className="gradient-text">Director</span></h2>
             <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>Amal K S - Managing Director</h3>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
-              Guiding SmartWheels with a strategic vision, our Managing Director ensures that the academy remains at the forefront of skating education and sports management.
+              Guiding Smart Wheels with a strategic vision, our Managing Director ensures that the academy remains at the forefront of skating education and sports management.
             </p>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
               Focused on infrastructure, student welfare, and expanding our reach, the leadership is committed to nurturing an environment where every skater can thrive and achieve their highest potential.
@@ -164,7 +165,7 @@ export default function AboutPage() {
             <h2>Our <span className="gradient-text">Mission</span></h2>
             <div className="divider" />
             <p style={{ maxWidth: '800px', margin: '0 auto var(--space-3)', lineHeight: 1.8 }}>To emerge as a beacon of excellence in skating that shapes confident champions and responsible individuals—nurturing excellence, resilience, and sportsmanship through world-class training, innovation, and unwavering commitment to holistic development.</p>
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>At SmartWheels Skating Academy, our mission is to:</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>At Smart Wheels Skating Academy, our mission is to:</p>
           </motion.div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)', maxWidth: '1100px', margin: '0 auto' }}>
             {missionPoints.map((item, i) => (
@@ -199,21 +200,34 @@ export default function AboutPage() {
             <div className="divider" style={{ margin: 'var(--space-2) auto' }} />
             <p style={{ fontSize: '0.9rem', maxWidth: '600px', margin: '0 auto' }}>We are proud to partner with these esteemed institutions to bring quality roller skating education to students within their school campuses.</p>
           </motion.div>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--space-2)', maxWidth: '1000px', margin: '0 auto' }}>
-            {associatedSchools.map((school, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, x: -10, y: 10 }}
-                animate={inView5 ? { opacity: 1, x: 0, y: 0 } : {}}
-                transition={{ duration: 0.3, delay: idx * 0.05 }}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-card)', padding: '8px 12px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)' }}
-                className="no-hover-card"
-              >
-                <div style={{ color: 'var(--accent-red)', fontSize: '0.85rem', width: '22px', fontWeight: 700, flexShrink: 0 }}>{idx + 1}.</div>
-                <div style={{ color: 'var(--text-primary)', fontSize: '0.85rem', lineHeight: 1.4 }}>{school}</div>
-              </motion.div>
-            ))}
+            {schoolsLoading ? (
+              Array.from({ length: 6 }).map((_, idx) => (
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-card)', padding: '8px 12px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)', opacity: 0.5 }}>
+                  <div style={{ width: 22, height: 14, background: 'rgba(225,6,0,0.2)', borderRadius: 4 }} />
+                  <div style={{ height: 14, background: 'rgba(255,255,255,0.08)', borderRadius: 4, flex: 1 }} />
+                </div>
+              ))
+            ) : schools.length > 0 ? (
+              schools.map((school, idx) => (
+                <motion.div
+                  key={school.id}
+                  initial={{ opacity: 0, x: -10, y: 10 }}
+                  animate={inView5 ? { opacity: 1, x: 0, y: 0 } : {}}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-card)', padding: '8px 12px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)' }}
+                  className="no-hover-card"
+                >
+                  <div style={{ color: 'var(--accent-red)', fontSize: '0.85rem', width: '22px', fontWeight: 700, flexShrink: 0 }}>{idx + 1}.</div>
+                  <div style={{ color: 'var(--text-primary)', fontSize: '0.85rem', lineHeight: 1.4 }}>{school.name}</div>
+                </motion.div>
+              ))
+            ) : (
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem', padding: 'var(--space-4)' }}>
+                No associated schools listed yet.
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -255,14 +269,14 @@ export default function AboutPage() {
             </motion.div>
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} 
-            animate={inView4 ? { opacity: 1, scale: 1 } : {}} 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={inView4 ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            style={{ 
-              background: 'linear-gradient(135deg, rgba(225,6,0,0.1), rgba(255,212,0,0.05))', 
-              border: '1px solid rgba(225,6,0,0.2)', 
-              borderRadius: 'var(--radius-xl)', 
+            style={{
+              background: 'linear-gradient(135deg, rgba(225,6,0,0.1), rgba(255,212,0,0.05))',
+              border: '1px solid rgba(225,6,0,0.2)',
+              borderRadius: 'var(--radius-xl)',
               padding: 'var(--space-6)',
               textAlign: 'center',
               maxWidth: '800px',

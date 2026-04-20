@@ -31,9 +31,9 @@ export default function GuinnessRecord() {
           <div className="divider" />
           <p style={{ maxWidth: '780px', margin: '0 auto', fontSize: '1.05rem', lineHeight: 1.9, color: 'var(--text-secondary)' }}>
             We are incredibly proud of our student{' '}
-            <span style={{ color: '#FFD400', fontWeight: 700 }}>Avanika</span>{' '}
+            <span style={{ color: '#FFD400', fontWeight: 700 }}>Avanika V A</span>{' '}
             and her dedicated coach{' '}
-            <span style={{ color: '#FFD400', fontWeight: 700 }}>Coach Afi</span>{' '}
+            <span style={{ color: '#FFD400', fontWeight: 700 }}>Coach Afi J</span>{' '}
             for securing a Guinness World Record — honored personally by the{' '}
             <span style={{ color: '#FFD400', fontWeight: 700 }}>Hon&apos;ble Chief Minister of Kerala, Shri Pinarayi Vijayan</span>,
             {' '}and respected state ministers of Kerala.

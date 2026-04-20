@@ -155,17 +155,17 @@ export default function HeroSection() {
             </div>
             <div className="hero__stat-divider" />
             <div className="hero__stat">
-              <span className="hero__stat-number">30+</span>
+              <span className="hero__stat-number">100+</span>
               <span className="hero__stat-label">Medals</span>
             </div>
             <div className="hero__stat-divider" />
             <div className="hero__stat">
-              <span className="hero__stat-number">10+</span>
+              <span className="hero__stat-number">7+</span>
               <span className="hero__stat-label">Years</span>
             </div>
             <div className="hero__stat-divider" />
             <div className="hero__stat">
-              <span className="hero__stat-number">5</span>
+              <span className="hero__stat-number">3</span>
               <span className="hero__stat-label">Branches</span>
             </div>
           </motion.div>

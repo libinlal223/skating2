@@ -76,7 +76,7 @@ export default function ParentReviews() {
           ))}
         </motion.div>
       </div>
-      
+
       {/* Marquee Row 2 — right scroll */}
       <div style={{ overflow: 'hidden' }}>
         <motion.div

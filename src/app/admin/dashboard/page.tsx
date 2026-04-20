@@ -2,15 +2,16 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Users, Calendar, DollarSign, GitBranch, LogOut, Plus, Search, Edit, Trash2, Check, X, ChevronDown, ChevronUp, Menu, LayoutDashboard, FileText, CreditCard, Pencil } from 'lucide-react';
+import { Users, Calendar, DollarSign, GitBranch, LogOut, Plus, Search, Edit, Trash2, Check, X, ChevronDown, ChevronUp, Menu, LayoutDashboard, FileText, CreditCard, Pencil, School } from 'lucide-react';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { getCurrentUser, logout as authLogout } from '@/lib/authService';
 import { getAllStudents, saveStudent, deleteStudent, StudentProfile, createStudentAccount, CreatedStudentCredentials } from '@/lib/studentService';
 import { updateBranch, deleteBranch as deleteBranchFS, BranchProfile } from '@/lib/branchService';
+import { getAllSchools, addSchool, updateSchool, deleteSchool, SchoolProfile } from '@/lib/schoolService';
 import { getStudentFees, updateStudentFee, FeeRecord, updateFee, deleteFeeRecord, payMultipleMonths } from '@/lib/feeService';
 
-type Tab = 'overview' | 'students' | 'fees' | 'branches';
+type Tab = 'overview' | 'students' | 'fees' | 'branches' | 'schools';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -52,6 +53,14 @@ export default function AdminDashboard() {
   const [isSavingBranch, setIsSavingBranch] = useState(false);
   const [branchSaveError, setBranchSaveError] = useState<string | null>(null);
 
+  // Schools state
+  const [schools, setSchools] = useState<SchoolProfile[]>([]);
+  const [showSchoolModal, setShowSchoolModal] = useState(false);
+  const [schoolForm, setSchoolForm] = useState({ id: '', name: '' });
+  const [isEditingSchool, setIsEditingSchool] = useState(false);
+  const [isSavingSchool, setIsSavingSchool] = useState(false);
+  const [schoolSaveError, setSchoolSaveError] = useState<string | null>(null);
+
   // Sync data on load
   useEffect(() => {
     const init = async () => {
@@ -82,8 +91,18 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchSchools = async () => {
+    try {
+      const list = await getAllSchools();
+      setSchools(list);
+    } catch (err) {
+      console.error('Error fetching schools:', err);
+    }
+  };
+
   const refreshAll = async () => {
     const [studentList, branchList] = await Promise.all([getAllStudents(), fetchBranches()]);
+    void fetchSchools();
     // Sort students by newest first based on createdAt
     const sortedStudents = studentList.sort((a, b) => {
       const getMs = (val: any) => {
@@ -250,6 +269,51 @@ export default function AdminDashboard() {
     }
   };
 
+  // --- School handlers ---
+  const openSchoolModal = (school: SchoolProfile | null = null) => {
+    if (school) {
+      setIsEditingSchool(true);
+      setSchoolForm({ id: school.id, name: school.name });
+    } else {
+      setIsEditingSchool(false);
+      setSchoolForm({ id: '', name: '' });
+    }
+    setSchoolSaveError(null);
+    setShowSchoolModal(true);
+  };
+
+  const handleSaveSchool = async () => {
+    if (!schoolForm.name.trim()) {
+      setSchoolSaveError('School name is required.');
+      return;
+    }
+    setSchoolSaveError(null);
+    setIsSavingSchool(true);
+    try {
+      if (isEditingSchool) {
+        await updateSchool(schoolForm.id, schoolForm.name);
+      } else {
+        await addSchool(schoolForm.name);
+      }
+      setShowSchoolModal(false);
+      setSchoolForm({ id: '', name: '' });
+      await fetchSchools();
+    } catch (err: any) {
+      console.error('[handleSaveSchool] Error:', err);
+      setSchoolSaveError(err.message || 'Failed to save school. Please try again.');
+    } finally {
+      setIsSavingSchool(false);
+    }
+  };
+
+  const handleDeleteSchool = async (e: React.MouseEvent, schoolId: string) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this school?')) {
+      await deleteSchool(schoolId);
+      await fetchSchools();
+    }
+  };
+
   // --- Fee helpers ---
   const getCurrentMonth = () => {
     const d = new Date();
@@ -403,6 +467,7 @@ export default function AdminDashboard() {
     { id: 'students', label: 'Students', icon: Users },
     { id: 'fees', label: 'Fees', icon: DollarSign },
     { id: 'branches', label: 'Branches', icon: GitBranch },
+    { id: 'schools', label: 'Schools', icon: School },
   ];
 
   const totalStudents = students.length;
@@ -808,6 +873,60 @@ export default function AdminDashboard() {
               </div>
             </motion.div>
           )}
+
+          {/* Schools Tab */}
+          {tab === 'schools' && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                <div>
+                  <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', letterSpacing: '0.05em', margin: 0 }}>Associated <span className="gradient-text">Schools</span></h2>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 4 }}>{schools.length} school{schools.length !== 1 ? 's' : ''} registered</p>
+                </div>
+                <button className="btn btn-primary" onClick={() => openSchoolModal()} style={{ fontSize: '0.8rem', padding: '8px 16px', gap: 6 }}><Plus size={14} /> Add School</button>
+              </div>
+
+              {schools.length === 0 ? (
+                <div className="card" style={{ padding: 'var(--space-8)', textAlign: 'center' }}>
+                  <School size={40} color="var(--text-muted)" style={{ margin: '0 auto var(--space-3)' }} />
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>No schools added yet. Click "Add School" to get started.</p>
+                </div>
+              ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 'var(--space-3)' }}>
+                  {schools.map((school, i) => (
+                    <motion.div
+                      key={school.id}
+                      className="card"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.06 }}
+                      style={{ padding: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}
+                    >
+                      <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,212,0,0.1)', border: '1px solid rgba(255,212,0,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', color: '#FFD400', fontWeight: 700 }}>{i + 1}</span>
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{school.name}</div>
+                      </div>
+                      <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
+                        <button
+                          onClick={() => openSchoolModal(school)}
+                          style={{ background: 'rgba(255,212,0,0.1)', border: '1px solid rgba(255,212,0,0.2)', color: '#FFD400', borderRadius: 'var(--radius-sm)', padding: '6px 10px', cursor: 'pointer', transition: 'all 0.2s' }}
+                          className="hover-btn-yellow"
+                          title="Edit school"
+                        ><Edit size={14} /></button>
+                        <button
+                          onClick={(e) => handleDeleteSchool(e, school.id)}
+                          style={{ background: 'rgba(225,6,0,0.1)', border: '1px solid rgba(225,6,0,0.2)', color: 'var(--accent-red)', borderRadius: 'var(--radius-sm)', padding: '6px 10px', cursor: 'pointer', transition: 'all 0.2s' }}
+                          className="hover-btn-red"
+                          title="Delete school"
+                        ><Trash2 size={14} /></button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
         </div>
         
         {/* Student Assign Modal */}
@@ -1062,6 +1181,47 @@ export default function AdminDashboard() {
                     <input type="text" className="form-input" placeholder="Enter location" value={branchForm.location} onChange={e => setBranchForm({...branchForm, location: e.target.value})} style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }} />
                   </div>
                   <button type="submit" className="btn btn-primary" style={{ marginTop: 'var(--space-3)', width: '100%', padding: '14px', position: 'relative', zIndex: 1 }}>{isEditingBranch ? 'Update Branch' : 'Create Branch'}</button>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {/* School Modal */}
+        {showSchoolModal && (
+          <div
+            style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-4)' }}
+            onClick={() => setShowSchoolModal(false)}
+          >
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)', zIndex: 0 }} />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="card modal-card"
+              onClick={(e: any) => e.stopPropagation()}
+              style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 460, background: 'var(--bg-secondary)', border: '1px solid rgba(255,255,255,0.1)', overflow: 'visible' }}
+            >
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 'var(--space-3)' }}>
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', letterSpacing: '0.05em' }}>{isEditingSchool ? 'Edit School' : 'Add School'}</h3>
+                  <button type="button" onClick={() => setShowSchoolModal(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 8, display: 'flex', alignItems: 'center', zIndex: 2 }}><X size={20} /></button>
+                </div>
+                <form onSubmit={(e) => { e.preventDefault(); handleSaveSchool(); }} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                  <div>
+                    <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 6, display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>School Name</label>
+                    <input autoFocus type="text" className="form-input" placeholder="e.g. SN Public School, Chathannoor" value={schoolForm.name} onChange={e => setSchoolForm({ ...schoolForm, name: e.target.value })} required style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }} />
+                  </div>
+                  {schoolSaveError && (
+                    <div style={{ background: 'rgba(225,6,0,0.1)', border: '1px solid rgba(225,6,0,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', fontSize: '0.82rem', color: '#ff6b6b', display: 'flex', alignItems: 'center', gap: 8 }}>⚠️ {schoolSaveError}</div>
+                  )}
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={isSavingSchool}
+                    style={{ marginTop: 'var(--space-2)', width: '100%', padding: '14px', position: 'relative', zIndex: 1, opacity: isSavingSchool ? 0.7 : 1, cursor: isSavingSchool ? 'not-allowed' : 'pointer' }}
+                  >
+                    {isSavingSchool ? '⏳ Saving...' : isEditingSchool ? 'Update School' : 'Add School'}
+                  </button>
                 </form>
               </div>
             </motion.div>
