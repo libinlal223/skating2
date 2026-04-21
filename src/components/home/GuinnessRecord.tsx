@@ -41,7 +41,7 @@ export default function GuinnessRecord() {
         </motion.div>
 
         {/* Layout: Main wide portrait + 4 smaller portraits in a row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', alignItems: 'start' }}>
+        <div className="guinness-grid">
 
           {/* Main CM Photo — portrait tall */}
           <motion.div
@@ -52,7 +52,7 @@ export default function GuinnessRecord() {
           >
             <div style={{ position: 'relative', aspectRatio: '3/4', width: '100%' }}>
               <Image
-                src="/guinness/imgb1.jpeg"
+                src="/guinness/img1.jpeg"
                 alt="Avanika and Coach Afi with Chief Minister Pinarayi Vijayan"
                 fill
                 style={{ objectFit: 'cover' }}
@@ -81,12 +81,12 @@ export default function GuinnessRecord() {
           </motion.div>
 
           {/* 4 smaller portrait images in 2x2 grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
+          <div className="guinness-subgrid">
             {[
-              { src: 'imgb2.jpeg', title: 'State Felicitation', person: 'Avanika', role: 'state ministers' },
-              { src: 'imgb3.jpeg', title: 'Ministerial Honor', person: 'Avanika', role: 'Kerala ministers' },
-              { src: 'imgb4.jpeg', title: 'Award Ceremony', person: 'Coach Afi & Avanika', role: 'official event' },
-              { src: 'imgb5.jpeg', title: 'Record Moment', person: 'Avanika', role: 'Guinness record' },
+              { src: 'img2.jpg',  title: 'Ministerial Honor',    person: 'Avanika',             role: 'Kerala ministers' },
+              { src: 'img3.jpeg', title: 'Award Ceremony',       person: 'Coach Afi & Avanika', role: 'official event' },
+              { src: 'img4.jpeg', title: 'Record Moment',        person: 'Avanika',             role: 'Guinness record' },
+              { src: 'img5.jpeg', title: 'Felicitation',         person: 'Avanika',             role: 'state officials' },
             ].map((img, i) => (
               <motion.div
                 key={i}
@@ -102,16 +102,6 @@ export default function GuinnessRecord() {
                     fill
                     style={{ objectFit: 'cover' }}
                   />
-                  {/* Name badge overlay on image */}
-                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), transparent)', padding: '12px 10px 8px' }}>
-                    <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.95rem', color: '#FFD400', letterSpacing: '0.05em', textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>
-                      {img.person}
-                    </div>
-                  </div>
-                </div>
-                <div style={{ padding: '10px 12px' }}>
-                  <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.05em', marginBottom: '2px' }}>{img.title}</p>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Honored by {img.role}</p>
                 </div>
               </motion.div>
             ))}

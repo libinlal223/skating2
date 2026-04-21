@@ -141,6 +141,77 @@ export default function StudentDashboard() {
               </div>
             </div>
 
+            {/* Attendance Line Chart — green up (present), red down (absent) */}
+            {monthlySessions.length > 0 && (() => {
+              const W = 600, H = 150, pad = { t: 16, b: 28, l: 40, r: 16 };
+              const innerW = W - pad.l - pad.r;
+              const innerH = H - pad.t - pad.b;
+              const n = monthlySessions.length;
+
+              // Build running attendance % per session
+              let cumPresent = 0;
+              const pts = monthlySessions.map((s, i) => {
+                if (s.status === 'present') cumPresent++;
+                const pct = (cumPresent / (i + 1)); // 0..1
+                const x = pad.l + (n === 1 ? innerW / 2 : (i / (n - 1)) * innerW);
+                const y = pad.t + innerH - pct * innerH;
+                return { x, y, pct, label: `S${s.sessionNumber}`, status: s.status };
+              });
+
+              // Y axis labels
+              const yLabels = [0, 50, 100];
+
+              return (
+                <div style={{ marginBottom: 'var(--space-4)', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255,255,255,0.05)', padding: '12px 8px 4px', overflowX: 'auto' }}>
+                  {/* Legend */}
+                  <div style={{ display: 'flex', gap: 16, marginBottom: 8, paddingLeft: pad.l, fontSize: '0.72rem', fontWeight: 600 }}>
+                    <span style={{ color: '#4CAF50' }}>▲ Present (line rises)</span>
+                    <span style={{ color: '#E10600' }}>▼ Absent (line falls)</span>
+                  </div>
+                  <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: Math.max(n * 32, 280), height: 150, display: 'block' }}>
+
+                    {/* Y grid lines + labels */}
+                    {yLabels.map(pct => {
+                      const y = pad.t + innerH - (pct / 100) * innerH;
+                      return (
+                        <g key={pct}>
+                          <line x1={pad.l} x2={pad.l + innerW} y1={y} y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth={1} strokeDasharray="3 3"/>
+                          <text x={pad.l - 4} y={y + 4} textAnchor="end" fontSize="8.5" fill="rgba(255,255,255,0.3)">{pct}%</text>
+                        </g>
+                      );
+                    })}
+
+                    {/* Colored segments */}
+                    {pts.slice(1).map((p, i) => {
+                      const prev = pts[i];
+                      const goingUp = p.y <= prev.y; // y decreases = value goes up
+                      return (
+                        <line
+                          key={i}
+                          x1={prev.x} y1={prev.y}
+                          x2={p.x}    y2={p.y}
+                          stroke={goingUp ? '#4CAF50' : '#E10600'}
+                          strokeWidth={2.5}
+                          strokeLinecap="round"
+                        />
+                      );
+                    })}
+
+                    {/* Dots + X labels */}
+                    {pts.map((p, i) => {
+                      const isPresent = p.status === 'present';
+                      return (
+                        <g key={i}>
+                          <circle cx={p.x} cy={p.y} r={3.5} fill={isPresent ? '#4CAF50' : '#E10600'} stroke="rgba(0,0,0,0.4)" strokeWidth={1}/>
+                          <text x={p.x} y={H - 4} textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.35)">{p.label}</text>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+              );
+            })()}
+
             {/* Sessions Date Legend */}
             {monthlySessions.filter(s => s.date !== null).length > 0 && (
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 'var(--space-3)', paddingLeft: '4px' }}>

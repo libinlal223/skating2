@@ -1,40 +1,98 @@
 'use client';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 
-const baseItems = [
-  { studentName: 'John Doe', achievement: 'Speed Training', award: 'Gold Medal', color: '#E10600', image: '/WhatsApp%20Image%202026-04-16%20at%2010.23.55%20AM.jpeg' },
-  { studentName: 'Jane Smith', achievement: 'State Championship', award: 'State Champion', color: '#FFD400', image: '/WhatsApp%20Image%202026-04-16%20at%2010.23.58%20AM.jpeg' },
-  { studentName: 'Alex Johnson', achievement: 'Annual Day 2024', award: 'Best Performer', color: '#C0C0C0', image: '/WhatsApp%20Image%202026-04-16%20at%2010.23.59%20AM%20(1).jpeg' },
-  { studentName: 'Emily Davis', achievement: 'Balance Drills', award: '1st Place', color: '#E10600', image: '/WhatsApp%20Image%202026-04-16%20at%2010.23.59%20AM%20(2).jpeg' },
-  { studentName: 'Michael Brown', achievement: 'National Recognition', award: 'National Finalist', color: '#FFD400', image: '/WhatsApp%20Image%202026-04-16%20at%2010.23.59%20AM.jpeg' },
-  { studentName: 'Sarah Wilson', achievement: 'District Finals', award: 'Silver Medal', color: '#C0C0C0', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.21%20AM%20(1).jpeg' },
-  { studentName: 'David Lee', achievement: 'Summer Camp', award: 'Fastest Lap', color: '#E10600', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.21%20AM.jpeg' },
-  { studentName: 'Laura White', achievement: 'Technique Session', award: 'Perfect Form', color: '#FFD400', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.22%20AM%20(1).jpeg' },
-  { studentName: 'Chris Green', achievement: 'Excellence Trophy', award: 'Trophy Winner', color: '#E10600', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.22%20AM.jpeg' },
-  { studentName: 'Emma Hall', achievement: 'Regional Sprint', award: 'Gold Medal', color: '#FFD400', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.23%20AM%20(1).jpeg' },
-  { studentName: 'James Allen', achievement: 'Winter Carnival', award: 'Bronze Medal', color: '#C0C0C0', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.23%20AM%20(2).jpeg' },
-  { studentName: 'Olivia Scott', achievement: 'Advanced Tactics', award: 'Rising Star', color: '#E10600', image: '/WhatsApp%20Image%202026-04-16%20at%2010.32.23%20AM.jpeg' },
+const galleryItems = [
+  { id: 1, studentName: 'Student 5', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img5.jpeg' },
+  { id: 2, studentName: 'Student 6', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img6.jpeg' },
+  { id: 3, studentName: 'Student 7', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img7.jpeg' },
+  { id: 4, studentName: 'Student 8', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img8.jpeg' },
+  { id: 5, studentName: 'Student 9', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img9.jpeg' },
+  { id: 6, studentName: 'Student 10', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img10.jpeg' },
+  { id: 7, studentName: 'Student 11', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img11.jpeg' },
+  { id: 8, studentName: 'Student 12', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img12.jpeg' },
+  { id: 9, studentName: 'Student 13', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img13.jpeg' },
+  { id: 10, studentName: 'Student 14', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img14.jpeg' },
+  { id: 11, studentName: 'Student 15', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img15.jpeg' },
+  { id: 12, studentName: 'Student 16', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img16.jpeg' },
+  { id: 13, studentName: 'Student 17', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img17.jpeg' },
+  { id: 14, studentName: 'Student 18', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img18.jpeg' },
+  { id: 15, studentName: 'Student 19', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img19.jpeg' },
+  { id: 16, studentName: 'Student 20', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img20.jpeg' },
+  { id: 17, studentName: 'Student 21', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img21.jpeg' },
+  { id: 18, studentName: 'Student 22', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img22.jpeg' },
+  { id: 19, studentName: 'Student 23', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img23.jpeg' },
+  { id: 20, studentName: 'Student 24', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img24.jpeg' },
+  { id: 21, studentName: 'Student 25', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img25.jpeg' },
+  { id: 22, studentName: 'Student 26', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img26.jpeg' },
+  { id: 23, studentName: 'Student 27', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img27.jpeg' },
+  { id: 24, studentName: 'Student 28', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img28.jpeg' },
+  { id: 25, studentName: 'Student 29', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img29.jpeg' },
+  { id: 26, studentName: 'Student 30', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img30.jpeg' },
+  { id: 27, studentName: 'Student 31', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img31.jpeg' },
+  { id: 28, studentName: 'Student 32', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img32.jpeg' },
+  { id: 29, studentName: 'Student 33', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img33.jpeg' },
+  { id: 30, studentName: 'Student 34', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img34.jpeg' },
+  { id: 31, studentName: 'Student 35', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img35.jpeg' },
+  { id: 32, studentName: 'Student 36', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img36.jpeg' },
+  { id: 33, studentName: 'Student 37', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img37.jpeg' },
+  { id: 34, studentName: 'Student 38', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img38.jpeg' },
+  { id: 35, studentName: 'Student 39', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img39.jpeg' },
+  { id: 36, studentName: 'Student 40', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img40.jpeg' },
+  { id: 37, studentName: 'Student 41', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img41.jpeg' },
+  { id: 38, studentName: 'Student 42', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img42.jpeg' },
+  { id: 39, studentName: 'Student 43', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img43.jpeg' },
+  { id: 40, studentName: 'Student 44', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img44.jpeg' },
+  { id: 41, studentName: 'Student 45', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img45.jpeg' },
+  { id: 42, studentName: 'Student 46', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img46.jpeg' },
+  { id: 43, studentName: 'Student 47', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img47.jpeg' },
+  { id: 44, studentName: 'Student 48', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img48.jpeg' },
+  { id: 45, studentName: 'Student 49', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img49.jpeg' },
+  { id: 46, studentName: 'Student 50', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img50.jpeg' },
+  { id: 47, studentName: 'Student 51', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img51.jpeg' },
+  { id: 48, studentName: 'Student 52', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img52.jpeg' },
+  { id: 49, studentName: 'Student 53', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img53.jpeg' },
+  { id: 50, studentName: 'Student 54', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img54.jpeg' },
+  { id: 51, studentName: 'Student 55', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img55.jpeg' },
+  { id: 52, studentName: 'Student 56', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img56.jpeg' },
+  { id: 53, studentName: 'Student 57', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img57.jpeg' },
+  { id: 54, studentName: 'Student 58', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img58.jpeg' },
+  { id: 55, studentName: 'Student 59', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img59.jpeg' },
+  { id: 56, studentName: 'Student 60', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img60.jpeg' },
+  { id: 57, studentName: 'Student 61', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img61.jpeg' },
+  { id: 58, studentName: 'Student 62', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img62.jpeg' },
+  { id: 59, studentName: 'Student 63', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img63.jpeg' },
+  { id: 60, studentName: 'Student 64', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img64.jpeg' },
+  { id: 61, studentName: 'Student 65', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img65.jpeg' },
+  { id: 62, studentName: 'Student 66', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img66.jpeg' },
+  { id: 63, studentName: 'Student 67', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img67.jpeg' },
+  { id: 64, studentName: 'Student 68', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img68.jpeg' },
+  { id: 65, studentName: 'Student 69', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img69.jpeg' },
+  { id: 66, studentName: 'Student 70', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img70.jpeg' },
+  { id: 67, studentName: 'Student 71', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img71.jpeg' },
 ];
-
-const galleryItems = Array.from({ length: 28 }).map((_, i) => ({
-  id: i + 1,
-  studentName: baseItems[i % baseItems.length].studentName,
-  achievement: baseItems[i % baseItems.length].achievement,
-  award: baseItems[i % baseItems.length].award,
-  color: baseItems[i % baseItems.length].color,
-  image: baseItems[i % baseItems.length].image
-}));
 
 export default function GalleryPreview() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [lightbox, setLightbox] = useState<number | null>(null);
-  const [visibleCount, setVisibleCount] = useState(12);
+  
+  const [isMobile, setIsMobile] = useState(false);
+  const [loadClicks, setLoadClicks] = useState(0);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const baseCount = isMobile ? 6 : 20;
+  const visibleCount = baseCount + (loadClicks * baseCount);
 
   const handleLoadMore = () => {
-    setVisibleCount(prev => Math.min(prev + 8, galleryItems.length));
+    setLoadClicks(c => c + 1);
   };
 
   return (
@@ -46,7 +104,7 @@ export default function GalleryPreview() {
           <p>Capturing moments of excellence, training, and competitive spirit</p>
         </motion.div>
 
-        <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 'var(--space-2)' }}>
+        <motion.div layout className="gallery-grid">
           <AnimatePresence mode="popLayout">
             {galleryItems.slice(0, visibleCount).map((item, i) => (
               <motion.div key={item.id} layout initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}

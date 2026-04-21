@@ -66,29 +66,30 @@ export default function AboutPage() {
 
       {/* Founder Story */}
       <section ref={ref1} style={{ background: 'var(--bg-secondary)', padding: 'var(--space-12) var(--space-4)' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-8)', alignItems: 'center' }}>
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
-            <div style={{ width: '100%', maxWidth: '350px', margin: '0 auto', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <motion.img
-                src="/founder.jpeg"
-                alt="Smart Wheels Founder"
-                style={{ width: '100%', height: 'auto', display: 'block' }}
-              />
-            </div>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, x: 40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
+        <div className="container about-founder-grid">
+          {/* Header — desktop col 2 row 1, mobile order 1 */}
+          <motion.div className="about-person-header" initial={{ opacity: 0, x: 40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
             <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--accent-red)', letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>Our Story</span>
-            <h2 style={{ margin: 'var(--space-2) 0 var(--space-3)' }}>Founder & <span className="gradient-text">Head Coach</span></h2>
+            <h2 style={{ margin: 'var(--space-2) 0 var(--space-2)' }}>Founder & <span className="gradient-text">Head Coach</span></h2>
             <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>Afi J - Founder &amp; Head Coach</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: 'var(--space-3)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {['B.P.Ed', 'M.P.Ed', 'NSNIS Certified Coach'].map(q => (
                 <span key={q} style={{ display: 'inline-flex', alignItems: 'center', padding: '4px 12px', background: 'rgba(225,6,0,0.1)', border: '1px solid rgba(225,6,0,0.3)', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-red)', letterSpacing: '0.06em', textTransform: 'uppercase' as const }}>{q}</span>
               ))}
             </div>
+          </motion.div>
+          {/* Photo — desktop col 1 rows 1–2, mobile order 2 */}
+          <motion.div className="about-person-img" initial={{ opacity: 0, x: -40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
+            <div style={{ width: '100%', maxWidth: '350px', margin: '0 auto', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <motion.img src="/founder.jpeg" alt="Smart Wheels Founder" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </div>
+          </motion.div>
+          {/* Body text — desktop col 2 row 2, mobile order 3 */}
+          <motion.div className="about-person-body" initial={{ opacity: 0, x: 40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.25 }}>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
               Smart Wheels Skating Academy was born from a vision to bring professional-level skating training to aspiring athletes across Kerala. What started as a single training center and has grown into a multi-city academy producing state and national champions.
             </p>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
               Our founder, driven by decades of competitive skating experience, established a training methodology that combines international techniques with personalized coaching, creating a path to excellence for every student.
             </p>
           </motion.div>
@@ -97,26 +98,27 @@ export default function AboutPage() {
 
       {/* Managing Director */}
       <section ref={ref6} style={{ background: 'var(--bg-primary)', padding: 'var(--space-12) var(--space-4)' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-8)', alignItems: 'center' }}>
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={inView6 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div className="container about-md-grid">
+          {/* Header — desktop col 1 row 1, mobile order 1 */}
+          <motion.div className="about-person-header" initial={{ opacity: 0, x: -40 }} animate={inView6 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
             <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: '#FFD400', letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>Leadership</span>
-            <h2 style={{ margin: 'var(--space-2) 0 var(--space-3)' }}>Managing <span className="gradient-text">Director</span></h2>
-            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>Amal K S - Managing Director</h3>
+            <h2 style={{ margin: 'var(--space-2) 0 var(--space-2)' }}>Managing <span className="gradient-text">Director</span></h2>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)' }}>Amal K S - Managing Director</h3>
+          </motion.div>
+          {/* Photo — desktop col 2 rows 1–2, mobile order 2 */}
+          <motion.div className="about-person-img" initial={{ opacity: 0, x: 40 }} animate={inView6 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
+            <div style={{ width: '100%', maxWidth: '350px', margin: '0 auto', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <motion.img src="/managing director.jpeg" alt="Managing Director" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </div>
+          </motion.div>
+          {/* Body text — desktop col 1 row 2, mobile order 3 */}
+          <motion.div className="about-person-body" initial={{ opacity: 0, x: -40 }} animate={inView6 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.25 }}>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
               Guiding Smart Wheels with a strategic vision, our Managing Director ensures that the academy remains at the forefront of skating education and sports management.
             </p>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
               Focused on infrastructure, student welfare, and expanding our reach, the leadership is committed to nurturing an environment where every skater can thrive and achieve their highest potential.
             </p>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, x: 40 }} animate={inView6 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
-            <div style={{ width: '100%', maxWidth: '350px', margin: '0 auto', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <motion.img
-                src="/managing director.jpeg"
-                alt="Managing Director"
-                style={{ width: '100%', height: 'auto', display: 'block' }}
-              />
-            </div>
           </motion.div>
         </div>
       </section>
@@ -131,6 +133,7 @@ export default function AboutPage() {
             <div className="divider" />
           </motion.div>
           <motion.div
+            className="about-vision-box"
             initial={{ opacity: 0, y: 30 }}
             animate={inView2 ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -284,12 +287,12 @@ export default function AboutPage() {
             }}
           >
             <h3 style={{ fontSize: '1.8rem', marginBottom: 'var(--space-4)', color: 'var(--text-primary)' }}>STUDENT PACKAGES</h3>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', marginBottom: 'var(--space-4)' }}>
+            <div className="about-packages-row" style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', marginBottom: 'var(--space-4)' }}>
               <div>
                 <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Monthly</div>
                 <div style={{ fontSize: '2.5rem', fontWeight: 700, color: '#FFD400' }}>₹300<span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}> /student</span></div>
               </div>
-              <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
+              <div className="about-packages-divider" style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
               <div>
                 <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Yearly</div>
                 <div style={{ fontSize: '2.5rem', fontWeight: 700, color: '#E10600' }}>₹2,500<span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}> /year</span></div>

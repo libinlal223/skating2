@@ -441,8 +441,73 @@ export default function AttendanceSetup() {
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
         input[type="date"] { color-scheme: dark; }
         .hide-on-mobile { }
+
         @media (max-width: 640px) {
           .hide-on-mobile { display: none; }
+
+          /* Main container: tighten padding */
+          .instructor-main { padding: var(--space-3) !important; }
+
+          /* Title + topbar */
+          .instructor-title { font-size: 1.4rem !important; }
+          .instructor-topbar { flex-direction: column !important; gap: var(--space-2) !important; }
+          .instructor-controls { width: 100%; justify-content: space-between !important; }
+          .instructor-report-btn { font-size: 0.75rem !important; padding: 6px 10px !important; }
+          .instructor-date-card { padding: var(--space-2) !important; }
+          .instructor-btn-text { display: none; }
+
+          /* Mark-all buttons */
+          .instructor-markall-btn { padding: 6px 10px !important; font-size: 0.78rem !important; }
+          .instructor-actions { gap: var(--space-2) !important; }
+          .instructor-stats { font-size: 0.78rem !important; }
+
+          /* Convert table rows to flex card rows — NO horizontal scroll */
+          table { display: block !important; width: 100% !important; }
+          thead { display: none !important; }
+          tbody { display: flex !important; flex-direction: column !important; gap: 6px !important; }
+          tbody tr {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            padding: 8px 6px !important;
+            border-radius: 8px !important;
+            border-bottom: none !important;
+          }
+          tbody td { display: block !important; padding: 0 !important; border: none !important; }
+          tbody td:first-child { flex: 1 !important; min-width: 0 !important; }
+          tbody td:last-child { flex-shrink: 0 !important; }
+
+          /* Student name: truncate */
+          tbody td div[style*="fontWeight: 500"] { 
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 130px !important;
+          }
+
+          /* Avatar shrink */
+          tbody td div[style*="width: 40px"] {
+            width: 32px !important;
+            height: 32px !important;
+            min-width: 32px !important;
+            font-size: 0.85rem !important;
+          }
+
+          /* Present / Absent buttons: icon-only, compact */
+          .instructor-status-btn {
+            padding: 8px 10px !important;
+            font-size: 0 !important;
+            min-width: 36px !important;
+          }
+          .instructor-status-btn svg { width: 16px !important; height: 16px !important; }
+          .instructor-status-btn span { display: none !important; }
+
+          /* Save button: full width */
+          .btn.btn-primary[style*="padding: 12px"] {
+            width: 100% !important;
+            justify-content: center !important;
+          }
         }
       `}} />
 

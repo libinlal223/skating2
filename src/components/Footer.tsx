@@ -32,7 +32,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="footer__tagline">
-              Professional skating training for all ages. Building champions since 2014.
+              Professional skating training for all ages. Building champions since 2019.
             </p>
             <div className="footer__socials">
               <a href="#" className="footer__social-link" aria-label="Instagram"><Instagram size={18} /></a>
@@ -48,15 +48,6 @@ export default function Footer() {
             <Link href="/branches" className="footer__link">Our Branches</Link>
             <Link href="/gallery" className="footer__link">Gallery</Link>
             <Link href="/contact" className="footer__link">Contact</Link>
-          </div>
-
-          {/* Programs */}
-          <div className="footer__col">
-            <h5 className="footer__col-title">Programs</h5>
-            <Link href="/about#programs" className="footer__link">Beginner</Link>
-            <Link href="/about#programs" className="footer__link">Intermediate</Link>
-            <Link href="/about#programs" className="footer__link">Advanced</Link>
-            <Link href="/about#programs" className="footer__link">Competition</Link>
           </div>
 
           {/* Contact */}
@@ -87,7 +78,7 @@ export default function Footer() {
         </div>
       </div>
 
-      
+
     </footer>
   );
 }

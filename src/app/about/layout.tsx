@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about SmartWheels Skating Academy — our vision, mission, and training programs. Building champions through expert coaching and world-class facilities since 2014.',
+  description: 'Learn about SmartWheels Skating Academy — our vision, mission, and training programs. Building champions through expert coaching and world-class facilities since 2019.',
   openGraph: {
     title: 'About SmartWheels Skating Academy',
     description: 'Our vision, mission, and coaching programs. Producing state and national champions across India.',

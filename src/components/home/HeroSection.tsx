@@ -107,7 +107,7 @@ export default function HeroSection() {
       </div>
 
       <motion.div
-        className="hero__side-bg"
+        className="hero__side-bg desktop-only"
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
@@ -138,9 +138,21 @@ export default function HeroSection() {
             BECOME A <span className="gradient-text">CHAMPION.</span>
           </h1>
 
-
-
-
+          {/* Mobile Image inline with text */}
+          <motion.div
+            className="hero__side-bg mobile-only"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
+            style={{ marginTop: '20px', marginBottom: '30px' }}
+          >
+            <Image
+              src={heroSideBg}
+              alt="Hero Background Mobile"
+              priority
+              className="hero__bg-image"
+            />
+          </motion.div>
 
           {/* Stats bar */}
           <motion.div

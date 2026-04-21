@@ -6,9 +6,9 @@ import { Users, Medal, Calendar, GitBranch } from 'lucide-react';
 
 const stats = [
   { icon: Users, number: 500, suffix: '+', label: 'Students Trained', color: '#E10600' },
-  { icon: Medal, number: 30, suffix: '+', label: 'State Medals', color: '#FFD400' },
-  { icon: Calendar, number: 10, suffix: '+', label: 'Years Experience', color: '#C0C0C0' },
-  { icon: GitBranch, number: 5, suffix: '', label: 'Branches', color: '#E10600' },
+  { icon: Medal, number: 100, suffix: '+', label: 'Medals', color: '#FFD400' },
+  { icon: Calendar, number: 7, suffix: '+', label: 'Years', color: '#C0C0C0' },
+  { icon: GitBranch, number: 3, suffix: '', label: 'Branches', color: '#E10600' },
 ];
 
 function Counter({ target, suffix, inView }: { target: number; suffix: string; inView: boolean }) {

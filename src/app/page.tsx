@@ -4,7 +4,6 @@ import BranchesSection from '@/components/home/BranchesSection';
 import AchievementsCounter from '@/components/home/AchievementsCounter';
 import GuinnessRecord from '@/components/home/GuinnessRecord';
 import SkatingBanner from '@/components/home/SkatingBanner';
-import MedalShowcase from '@/components/home/MedalShowcase';
 import GalleryPreview from '@/components/home/GalleryPreview';
 import SkatingBanner2 from '@/components/home/SkatingBanner2';
 import ParentReviews from '@/components/home/ParentReviews';
@@ -19,7 +18,6 @@ export default function Home() {
       <AchievementsCounter />
       <SkatingBanner />
       <GuinnessRecord />
-      <MedalShowcase />
       <GalleryPreview />
       <SkatingBanner2 />
       <ParentReviews />

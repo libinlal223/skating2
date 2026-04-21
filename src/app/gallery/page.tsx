@@ -1,6 +1,6 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 
 const baseItems = [
@@ -25,10 +25,21 @@ const items = Array.from({ length: 32 }).map((_, i) => ({
 
 export default function GalleryPage() {
   const [lb, setLb] = useState<number | null>(null);
-  const [visibleCount, setVisibleCount] = useState(16);
+  const [isMobile, setIsMobile] = useState(false);
+  const [loadClicks, setLoadClicks] = useState(0);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const baseCount = isMobile ? 6 : 20;
+  const visibleCount = baseCount + (loadClicks * baseCount);
 
   const handleLoadMore = () => {
-    setVisibleCount(prev => Math.min(prev + 8, items.length));
+    setLoadClicks(c => c + 1);
   };
 
   return (
@@ -42,7 +53,7 @@ export default function GalleryPage() {
 
       <section style={{ background: 'var(--bg-secondary)', padding: 'var(--space-8) var(--space-4)' }}>
         <div className="container">
-          <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--space-3)' }}>
+          <motion.div layout className="gallery-grid">
             <AnimatePresence mode="popLayout">
               {items.slice(0, visibleCount).map((item, i) => (
                 <motion.div key={item.id} layout initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
