@@ -4,80 +4,47 @@ import { useRef, useState, useEffect } from 'react';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 
 const galleryItems = [
-  { id: 1, studentName: 'Student 5', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img5.jpeg' },
-  { id: 2, studentName: 'Student 6', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img6.jpeg' },
-  { id: 3, studentName: 'Student 7', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img7.jpeg' },
-  { id: 4, studentName: 'Student 8', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img8.jpeg' },
-  { id: 5, studentName: 'Student 9', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img9.jpeg' },
-  { id: 6, studentName: 'Student 10', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img10.jpeg' },
-  { id: 7, studentName: 'Student 11', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img11.jpeg' },
-  { id: 8, studentName: 'Student 12', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img12.jpeg' },
-  { id: 9, studentName: 'Student 13', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img13.jpeg' },
-  { id: 10, studentName: 'Student 14', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img14.jpeg' },
-  { id: 11, studentName: 'Student 15', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img15.jpeg' },
-  { id: 12, studentName: 'Student 16', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img16.jpeg' },
-  { id: 13, studentName: 'Student 17', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img17.jpeg' },
-  { id: 14, studentName: 'Student 18', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img18.jpeg' },
-  { id: 15, studentName: 'Student 19', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img19.jpeg' },
-  { id: 16, studentName: 'Student 20', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img20.jpeg' },
-  { id: 17, studentName: 'Student 21', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img21.jpeg' },
-  { id: 18, studentName: 'Student 22', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img22.jpeg' },
-  { id: 19, studentName: 'Student 23', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img23.jpeg' },
-  { id: 20, studentName: 'Student 24', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img24.jpeg' },
-  { id: 21, studentName: 'Student 25', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img25.jpeg' },
-  { id: 22, studentName: 'Student 26', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img26.jpeg' },
-  { id: 23, studentName: 'Student 27', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img27.jpeg' },
-  { id: 24, studentName: 'Student 28', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img28.jpeg' },
-  { id: 25, studentName: 'Student 29', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img29.jpeg' },
-  { id: 26, studentName: 'Student 30', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img30.jpeg' },
-  { id: 27, studentName: 'Student 31', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img31.jpeg' },
-  { id: 28, studentName: 'Student 32', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img32.jpeg' },
-  { id: 29, studentName: 'Student 33', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img33.jpeg' },
-  { id: 30, studentName: 'Student 34', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img34.jpeg' },
-  { id: 31, studentName: 'Student 35', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img35.jpeg' },
-  { id: 32, studentName: 'Student 36', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img36.jpeg' },
-  { id: 33, studentName: 'Student 37', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img37.jpeg' },
-  { id: 34, studentName: 'Student 38', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img38.jpeg' },
-  { id: 35, studentName: 'Student 39', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img39.jpeg' },
-  { id: 36, studentName: 'Student 40', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img40.jpeg' },
-  { id: 37, studentName: 'Student 41', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img41.jpeg' },
-  { id: 38, studentName: 'Student 42', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img42.jpeg' },
-  { id: 39, studentName: 'Student 43', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img43.jpeg' },
-  { id: 40, studentName: 'Student 44', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img44.jpeg' },
-  { id: 41, studentName: 'Student 45', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img45.jpeg' },
-  { id: 42, studentName: 'Student 46', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img46.jpeg' },
-  { id: 43, studentName: 'Student 47', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img47.jpeg' },
-  { id: 44, studentName: 'Student 48', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img48.jpeg' },
-  { id: 45, studentName: 'Student 49', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img49.jpeg' },
-  { id: 46, studentName: 'Student 50', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img50.jpeg' },
-  { id: 47, studentName: 'Student 51', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img51.jpeg' },
-  { id: 48, studentName: 'Student 52', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img52.jpeg' },
-  { id: 49, studentName: 'Student 53', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img53.jpeg' },
-  { id: 50, studentName: 'Student 54', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img54.jpeg' },
-  { id: 51, studentName: 'Student 55', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img55.jpeg' },
-  { id: 52, studentName: 'Student 56', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img56.jpeg' },
-  { id: 53, studentName: 'Student 57', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img57.jpeg' },
-  { id: 54, studentName: 'Student 58', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img58.jpeg' },
-  { id: 55, studentName: 'Student 59', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img59.jpeg' },
-  { id: 56, studentName: 'Student 60', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img60.jpeg' },
-  { id: 57, studentName: 'Student 61', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img61.jpeg' },
-  { id: 58, studentName: 'Student 62', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img62.jpeg' },
-  { id: 59, studentName: 'Student 63', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img63.jpeg' },
-  { id: 60, studentName: 'Student 64', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img64.jpeg' },
-  { id: 61, studentName: 'Student 65', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img65.jpeg' },
-  { id: 62, studentName: 'Student 66', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img66.jpeg' },
-  { id: 63, studentName: 'Student 67', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img67.jpeg' },
-  { id: 64, studentName: 'Student 68', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img68.jpeg' },
-  { id: 65, studentName: 'Student 69', achievement: 'Event Name', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img69.jpeg' },
-  { id: 66, studentName: 'Student 70', achievement: 'Event Name', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img70.jpeg' },
-  { id: 67, studentName: 'Student 71', achievement: 'Event Name', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img71.jpeg' },
+  { id: 34, studentName: 'Subjunior Girls', achievement: 'District Rollball', award: 'Gold Medal', color: '#FFD400', image: '/achievemnts2025/img38.jpeg' },
+  { id: 35, studentName: 'Amrita (Subjunior Girls)', achievement: 'State meet Roll ball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img39.jpeg' },
+  { id: 36, studentName: 'Devadeth (Sub Junior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img40.jpeg' },
+  { id: 37, studentName: 'Jagan (Mini Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img41.jpeg' },
+  { id: 38, studentName: 'Madhav (Sub Junior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img42.jpeg' },
+  { id: 39, studentName: 'Mini Girls', achievement: 'District Roll Ball', award: 'Bronze Medal', color: '#E10600', image: '/achievemnts2025/img43.jpeg' },
+  { id: 40, studentName: 'Sub Junior', achievement: 'District Roll Ball', award: 'Bronze Medal', color: '#FFD400', image: '/achievemnts2025/img44.jpeg' },
+  { id: 41, studentName: 'Mini Girls', achievement: 'District Roll Ball', award: 'Silver Medal', color: '#C0C0C0', image: '/achievemnts2025/img45.jpeg' },
+  { id: 42, studentName: 'Junior', achievement: 'District Roll Ball', award: 'Silver Medal', color: '#E10600', image: '/achievemnts2025/img46.jpeg' },
+  { id: 43, studentName: 'Parthipan (Sub Junior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img47.jpeg' },
+  { id: 44, studentName: 'Anha (Sub Junior Girls )', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img48.jpeg' },
+  { id: 45, studentName: 'Govind (Sub JUnior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img49.jpeg' },
+  { id: 46, studentName: 'Avanika (Sub Junior Girls)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img50.jpeg' },
+  { id: 47, studentName: 'Anugraha (Junior Girls)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img51.jpeg' },
+  { id: 48, studentName: 'Mahi (Junior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img52.jpeg' },
+  { id: 49, studentName: 'Zeher (Super mini Girls) ', achievement: 'South Zone National Championship', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img53.jpeg' },
+  { id: 50, studentName: 'Akhilesh (Junior Boys) ', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img54.jpeg' },
+  { id: 51, studentName: 'Bhuvi (Super Mini Girls)', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img55.jpeg' },
+  { id: 52, studentName: 'Adam (Super mini Boys) ', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img56.jpeg' },
+  { id: 53, studentName: 'Niyati (Super Mini Girls)', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img57.jpeg' },
+  { id: 54, studentName: 'Sangeeth (Super Mini Boys)', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img58.jpeg' },
+  { id: 55, studentName: 'Mantra (Super Mini Girls)', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img59.jpeg' },
+  { id: 56, studentName: 'Namisha P (Super Mini Girls)', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img60.jpeg' },
+  { id: 57, studentName: 'Sub Junior Girls', achievement: 'District Roll Ball', award: 'Gold Medal', color: '#E10600', image: '/achievemnts2025/img61.jpeg' },
+  { id: 58, studentName: 'Meher (Mini Girls)', achievement: 'South Zone National Champions', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img62.jpeg' },
+  { id: 59, studentName: 'Abhav (Sub Junior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img63.jpeg' },
+  { id: 60, studentName: 'Suhana Nargiz (Sub junior Girls)', achievement: 'National participation and south zone national', award: 'Bronze Medal', color: '#E10600', image: '/achievemnts2025/img64.jpeg' },
+  { id: 61, studentName: 'Anula Shinu (Sub Junior Girls)', achievement: 'National participation and south zone national', award: 'Bronze Medal', color: '#FFD400', image: '/achievemnts2025/img65.jpeg' },
+  { id: 62, studentName: 'Sreehari (Sub Junior Boys)', achievement: 'State meet Rollball championship', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img66.jpeg' },
+  { id: 63, studentName: 'Sanaan ', achievement: '13th Roll Ball National Championship ', award: 'Bronze Medal', color: '#E10600', image: '/achievemnts2025/img67.jpeg' },
+  { id: 66, studentName: 'Sidharth V', achievement: '13th Roll Ball National Championship ', award: 'Bronze Medal', color: '#FFD400', image: '/achievemnts2025/img68.jpeg' },
+  { id: 65, studentName: 'SmartWheels Interschool skating Championship 2025-26', achievement: 'Champions:Vimala Central School, Karamcode', award: 'Medal / Participation', color: '#C0C0C0', image: '/achievemnts2025/img69.jpeg' },
+  { id: 64, studentName: 'SmartWheels Interschool skating Championship 2025-26', achievement: '1st Runner: Spinning Legs, Tvm', award: 'Medal / Participation', color: '#E10600', image: '/achievemnts2025/img70.jpeg' },
+  { id: 67, studentName: 'SmartWheels Interschool skating Championship 2025-26', achievement: '2nd Runner: MGM Karuna Central School, Paripally', award: 'Medal / Participation', color: '#FFD400', image: '/achievemnts2025/img71.jpeg' },
 ];
 
 export default function GalleryPreview() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [lightbox, setLightbox] = useState<number | null>(null);
-  
+
   const [isMobile, setIsMobile] = useState(false);
   const [loadClicks, setLoadClicks] = useState(0);
 
@@ -142,13 +109,15 @@ export default function GalleryPreview() {
               style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#F5F5F5', cursor: 'pointer', padding: 12, borderRadius: '50%' }}><ChevronLeft size={32} /></button>
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} onClick={e => e.stopPropagation()}
               style={{ width: '80%', maxWidth: 800, aspectRatio: '16/10', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-              {(() => { const item = galleryItems.find(g => g.id === lightbox); return item ? (
-                <div style={{ width: '100%', height: '100%', position: 'relative', background: `linear-gradient(135deg, ${item.color}30, ${item.color}10)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={item.image} alt={item.studentName} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: 0 }} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', zIndex: 1, pointerEvents: 'none' }} />
-                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '0.05em', color: '#F5F5F5', zIndex: 2, position: 'absolute', bottom: 40 }}>{item.studentName}</h3>
-                  <p style={{ color: '#DDD', zIndex: 2, position: 'absolute', bottom: 15, display: 'flex', gap: '10px', alignItems: 'center' }}><span>{item.achievement}</span> <span style={{ color: item.color }}>|</span> <span>🏆 {item.award}</span></p>
-                </div>) : null; })()}
+              {(() => {
+                const item = galleryItems.find(g => g.id === lightbox); return item ? (
+                  <div style={{ width: '100%', height: '100%', position: 'relative', background: `linear-gradient(135deg, ${item.color}30, ${item.color}10)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <img src={item.image} alt={item.studentName} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: 0 }} />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', zIndex: 1, pointerEvents: 'none' }} />
+                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '0.05em', color: '#F5F5F5', zIndex: 2, position: 'absolute', bottom: 40 }}>{item.studentName}</h3>
+                    <p style={{ color: '#DDD', zIndex: 2, position: 'absolute', bottom: 15, display: 'flex', gap: '10px', alignItems: 'center' }}><span>{item.achievement}</span> <span style={{ color: item.color }}>|</span> <span>🏆 {item.award}</span></p>
+                  </div>) : null;
+              })()}
             </motion.div>
             <button onClick={e => { e.stopPropagation(); const idx = galleryItems.findIndex(f => f.id === lightbox); setLightbox(galleryItems[(idx + 1) % galleryItems.length].id); }}
               style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#F5F5F5', cursor: 'pointer', padding: 12, borderRadius: '50%' }}><ChevronRight size={32} /></button>
