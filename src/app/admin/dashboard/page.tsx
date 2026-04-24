@@ -9,7 +9,7 @@ import { getCurrentUser, logout as authLogout } from '@/lib/authService';
 import { getAllStudents, saveStudent, deleteStudent, StudentProfile, createStudentAccount, CreatedStudentCredentials } from '@/lib/studentService';
 import { updateBranch, deleteBranch as deleteBranchFS, BranchProfile } from '@/lib/branchService';
 import { getAllSchools, addSchool, updateSchool, deleteSchool, SchoolProfile } from '@/lib/schoolService';
-import { getStudentFees, updateStudentFee, FeeRecord, updateFee, deleteFeeRecord, payMultipleMonths } from '@/lib/feeService';
+import { getStudentFees, updateStudentFee, FeeRecord, updateFee, deleteFeeRecord, payMultipleMonths, getAllFees, addMonths } from '@/lib/feeService';
 
 type Tab = 'overview' | 'students' | 'fees' | 'branches' | 'schools';
 
@@ -39,7 +39,7 @@ export default function AdminDashboard() {
   const [editFeeForm, setEditFeeForm] = useState({ studentId: '', month: '', total: '', paid: '' });
   const [editFeeStudentName, setEditFeeStudentName] = useState('');
 
-  const [studentForm, setStudentForm] = useState({ id: '', name: '', branch: '', age: '', phone: '', password: '', monthlyFee: '' });
+  const [studentForm, setStudentForm] = useState({ id: '', name: '', branch: '', age: '', dateOfBirth: '', phone: '', password: '', monthlyFee: '' });
   const [isEditing, setIsEditing] = useState(false);
 
   // Credentials modal — shown after a new student is successfully created
@@ -84,6 +84,11 @@ export default function AdminDashboard() {
       const snap = await getDocs(collection(db, 'branches'));
       const branchList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       setBranches(branchList);
+      // Auto-select first branch for branch-wise views
+      if (branchList.length > 0) {
+        setBranchFilter(prev => prev || branchList[0].id);
+        setFeeBranchFilter(prev => prev || branchList[0].id);
+      }
       return branchList;
     } catch (err) {
       console.error('Error fetching branches:', err);
@@ -115,22 +120,61 @@ export default function AdminDashboard() {
       return getMs(b.createdAt) - getMs(a.createdAt);
     });
     setStudents(sortedStudents);
-    await refreshFees(sortedStudents);
+    await refreshFees();
   };
 
-  const refreshFees = async (studentList?: any[]) => {
-    const list = studentList || students;
-    const allFeeArrays = await Promise.all(list.map(s => getStudentFees(s.id)));
-    setAllFees(allFeeArrays.flat());
+  const refreshFees = async () => {
+    try {
+      const fees = await getAllFees();
+      setAllFees(fees);
+    } catch (err) {
+      console.error('Error fetching fees:', err);
+    }
+  };
+
+  // Helper: update or insert a fee record in local state (no Firestore read)
+  const upsertLocalFee = (studentId: string, month: string, updates: Partial<FeeRecord>) => {
+    setAllFees(prev => {
+      const idx = prev.findIndex(f => f.studentId === studentId && f.month === month);
+      if (idx >= 0) {
+        const copy = [...prev];
+        copy[idx] = { ...copy[idx], ...updates, balance: Math.max(((updates.total ?? copy[idx].total) || 0) - ((updates.paid ?? copy[idx].paid) || 0), 0) };
+        return copy;
+      }
+      const total = updates.total || 0;
+      const paid = updates.paid || 0;
+      return [{ studentId, month, total, paid, status: (paid >= total ? 'paid' : 'pending') as any, balance: Math.max(total - paid, 0), ...updates }, ...prev];
+    });
+  };
+
+  const refreshStudents = async () => {
+    try {
+      const studentList = await getAllStudents();
+      const sortedStudents = studentList.sort((a, b) => {
+        const getMs = (val: any) => {
+          if (!val) return 0;
+          if (typeof val === 'string') return new Date(val).getTime();
+          if (val.toMillis) return val.toMillis();
+          if (val.seconds) return val.seconds * 1000;
+          return 0;
+        };
+        return getMs(b.createdAt) - getMs(a.createdAt);
+      });
+      setStudents(sortedStudents);
+      return sortedStudents;
+    } catch (err) {
+      console.error('Error fetching students:', err);
+      return students;
+    }
   };
 
   const openStudentModal = (student: any = null) => {
     if (student) {
       setIsEditing(true);
-      setStudentForm({ id: student.id, name: student.name, branch: student.branchId || student.branch, age: student.age || '', phone: student.phone || '', password: student.password || '', monthlyFee: student.monthlyFee ? String(student.monthlyFee) : '' });
+      setStudentForm({ id: student.id, name: student.name, branch: student.branchId || student.branch, age: student.age || '', dateOfBirth: student.dateOfBirth || '', phone: student.phone || '', password: student.password || '', monthlyFee: student.monthlyFee ? String(student.monthlyFee) : '' });
     } else {
       setIsEditing(false);
-      setStudentForm({ id: '', name: '', branch: '', age: '', phone: '', password: '', monthlyFee: '' });
+      setStudentForm({ id: '', name: '', branch: '', age: '', dateOfBirth: '', phone: '', password: '', monthlyFee: '' });
     }
     setShowStudentModal(true);
   };
@@ -153,11 +197,12 @@ export default function AdminDashboard() {
         branchId: studentForm.branch || '',
         branch: branchName || '',
         age: studentForm.age,
+        dateOfBirth: studentForm.dateOfBirth,
         phone: studentForm.phone,
         monthlyFee: parseInt(studentForm.monthlyFee) || 6000,
       };
       await saveStudent(studentToSave);
-      await refreshAll();
+      await refreshStudents();
       setShowStudentModal(false);
       return;
     }
@@ -178,17 +223,19 @@ export default function AdminDashboard() {
         branchId: studentForm.branch || '',
         branch: branchName || '',
         age: studentForm.age,
+        dateOfBirth: studentForm.dateOfBirth,
         monthlyFee: parseInt(studentForm.monthlyFee) || 6000,
       });
 
-      await refreshAll();
+      await refreshStudents();
+      // No refreshFees needed — new student has no fee records yet
       setShowStudentModal(false);
       setNewCredentials(credentials);
       setShowCredentialsModal(true);
     } catch (err: any) {
       console.error('[handleSaveStudent] Firebase error:', err);
       if (err.code === 'auth/email-already-in-use') {
-        setCreateError(`A student with phone ${studentForm.phone} already has an account.`);
+        setCreateError(`A student with ID "${studentForm.id}" already exists.`);
       } else if (err.code === 'auth/weak-password') {
         setCreateError('Password is too weak. Use at least 6 characters.');
       } else {
@@ -202,8 +249,7 @@ export default function AdminDashboard() {
   const handleDeleteStudent = async (student: any) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       await deleteStudent(student.uid, student.id || student.studentId);
-      const updated = await getAllStudents();
-      setStudents(updated);
+      await refreshStudents();
     }
   };
 
@@ -405,11 +451,20 @@ export default function AdminDashboard() {
     if (duration > 1) {
       const monthlyFeeForBulk = parsedTotal !== undefined ? parsedTotal : (student?.monthlyFee || 6000);
       await payMultipleMonths(studentId, branchId, paymentForm.month, duration, monthlyFeeForBulk);
+      // Optimistic local update for each month in the bulk payment
+      for (let i = 0; i < duration; i++) {
+        const m = addMonths(paymentForm.month, i);
+        upsertLocalFee(studentId, m, { studentId, branchId, month: m, total: monthlyFeeForBulk, paid: monthlyFeeForBulk, status: 'paid' });
+      }
     } else {
       await updateFee(studentId, paymentForm.month, addPaid, parsedTotal);
+      // Optimistic local update for the single month
+      const existing = allFees.find(f => f.studentId === studentId && f.month === paymentForm.month);
+      const total = parsedTotal !== undefined ? parsedTotal : (existing?.total || student?.monthlyFee || 6000);
+      const newPaid = Math.min((existing?.paid || 0) + addPaid, total);
+      upsertLocalFee(studentId, paymentForm.month, { studentId, branchId, month: paymentForm.month, total, paid: newPaid, status: newPaid >= total ? 'paid' : (newPaid > 0 ? 'partial' : 'pending') as any });
     }
 
-    await refreshFees();
     setShowPaymentModal(false);
   };
 
@@ -421,7 +476,7 @@ export default function AdminDashboard() {
     const branchId = student?.branchId || '';
     const total = existing ? existing.total : (student?.monthlyFee || 6000);
     await updateStudentFee(resolvedStudentId, branchId, currentMonth, total, total);
-    await refreshFees();
+    upsertLocalFee(resolvedStudentId, currentMonth, { studentId: resolvedStudentId, branchId, month: currentMonth, total, paid: total, status: 'paid' });
   };
 
   const openEditFeeModal = (e: React.MouseEvent, studentId: string, studentName: string, feeRow: any) => {
@@ -443,7 +498,7 @@ export default function AdminDashboard() {
     const resolvedStudentId = student?.studentId || student?.id || editFeeForm.studentId;
     const branchId = student?.branchId || '';
     await updateStudentFee(resolvedStudentId, branchId, editFeeForm.month, total, paid);
-    await refreshFees();
+    upsertLocalFee(resolvedStudentId, editFeeForm.month, { studentId: resolvedStudentId, branchId, month: editFeeForm.month, total, paid, status: paid >= total ? 'paid' : (paid > 0 ? 'partial' : 'pending') as any });
     setShowEditFeeModal(false);
   };
 
@@ -453,7 +508,7 @@ export default function AdminDashboard() {
     const resolvedStudentId = student?.studentId || student?.id || studentId;
     if (window.confirm(`Delete ${formatMonthLabel(feeRow.month)} fee record from database?`)) {
       await deleteFeeRecord(resolvedStudentId, feeRow.month);
-      await refreshFees();
+      setAllFees(prev => prev.filter(f => !(f.studentId === resolvedStudentId && f.month === feeRow.month)));
     }
   };
 
@@ -575,7 +630,7 @@ export default function AdminDashboard() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 600 }}>
                   <thead>
                     <tr>
-                      {['ID', 'Name', 'Branch', 'Age', 'Phone Number', 'Password'].map(h => (
+                      {['ID', 'Name', 'Branch', 'Age', 'DOB', 'Phone Number'].map(h => (
                         <th key={h} style={{ textAlign: 'left', padding: '12px 8px', fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{h}</th>
                       ))}
                     </tr>
@@ -587,8 +642,8 @@ export default function AdminDashboard() {
                         <td style={{ padding: '14px 8px', fontSize: '0.85rem' }}>{s.name}</td>
                         <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.branch}</td>
                         <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.age || 'N/A'}</td>
+                        <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.dateOfBirth || 'N/A'}</td>
                         <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.phone}</td>
-                        <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.password || 'N/A'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -627,7 +682,6 @@ export default function AdminDashboard() {
                     <input className="form-input" placeholder="Search students..." value={search} onChange={e => setSearch(e.target.value)} style={{ paddingLeft: 36 }} />
                   </div>
                   <select className="form-input" value={branchFilter} onChange={e => setBranchFilter(e.target.value)} style={{ width: 'auto', minWidth: 160 }}>
-                    <option value="">All Branches</option>
                     {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                   </select>
                 </div>
@@ -638,7 +692,7 @@ export default function AdminDashboard() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
                   <thead>
                     <tr>
-                      {['ID', 'Name', 'Branch', 'Age', 'Phone', 'Fee', 'Password', 'Actions'].map(h => (
+                      {['ID', 'Name', 'Branch', 'Age', 'DOB', 'Phone', 'Fee', 'Actions'].map(h => (
                         <th key={h} style={{ textAlign: 'left', padding: '12px 8px', fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{h}</th>
                       ))}
                     </tr>
@@ -647,7 +701,7 @@ export default function AdminDashboard() {
                     {students
                       .filter(s => {
                         console.log("Student:", s.name, s.branchId);
-                        if (!branchFilter) return true;
+                        if (!branchFilter) return false;
                         const filterBranchName = branches.find((b: any) => b.id === branchFilter)?.name;
                         return s.branchId === branchFilter || 
                                s.branchId === filterBranchName || 
@@ -660,9 +714,9 @@ export default function AdminDashboard() {
                           <td style={{ padding: '14px 8px', fontSize: '0.85rem' }}>{s.name}</td>
                           <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.branch}</td>
                           <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.age || 'N/A'}</td>
+                          <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.dateOfBirth || 'N/A'}</td>
                           <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.phone}</td>
                           <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: '#4CAF50', fontWeight: 600 }}>₹{(s.monthlyFee || 6000).toLocaleString()}</td>
-                          <td style={{ padding: '14px 8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.password || 'N/A'}</td>
                           <td style={{ padding: '14px 8px' }}>
                             <div style={{ display: 'flex', gap: 6 }}>
                               <button onClick={() => openStudentModal(s)} style={{ background: 'rgba(255,212,0,0.1)', border: '1px solid rgba(255,212,0,0.2)', color: '#FFD400', borderRadius: 'var(--radius-sm)', padding: '6px 10px', cursor: 'pointer', transition: 'all 0.2s' }} className="hover-btn-yellow"><Edit size={14} /></button>
@@ -685,7 +739,6 @@ export default function AdminDashboard() {
               {/* Branch filter */}
               <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', flexWrap: 'wrap' }}>
                 <select className="form-input" value={feeBranchFilter} onChange={e => setFeeBranchFilter(e.target.value)} style={{ width: 'auto', minWidth: 200 }}>
-                  <option value="">All Branches</option>
                   {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                 </select>
               </div>
@@ -693,7 +746,7 @@ export default function AdminDashboard() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                 {students
                   .filter(s => {
-                    if (!feeBranchFilter) return true;
+                    if (!feeBranchFilter) return false;
                     const filterBranchName = branches.find((b: any) => b.id === feeBranchFilter)?.name;
                     return s.branchId === feeBranchFilter || 
                            s.branchId === filterBranchName || 
@@ -854,7 +907,7 @@ export default function AdminDashboard() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 'var(--space-3)' }}>
                 {branches.map((b, i) => (
                   <motion.div key={b.id} className="card hover-card-grow" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} 
-                    onClick={() => { setBranchFilter(b.name); setTab('students'); }}
+                    onClick={() => { setBranchFilter(b.id); setTab('students'); }}
                     style={{ padding: 'var(--space-4)', cursor: 'pointer' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-3)' }}>
                       <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', letterSpacing: '0.06em' }}>{b.name}</h4>
@@ -966,10 +1019,13 @@ export default function AdminDashboard() {
                       <input type="number" className="form-input" placeholder="Enter age" value={studentForm.age} onChange={e => setStudentForm({...studentForm, age: e.target.value})} style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 6, display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number</label>
-                      <input type="text" className="form-input" placeholder="Enter phone number" value={studentForm.phone} onChange={e => setStudentForm({...studentForm, phone: e.target.value})} style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }} />
-
+                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 6, display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Date of Birth</label>
+                      <input type="date" className="form-input" value={studentForm.dateOfBirth} onChange={e => setStudentForm({...studentForm, dateOfBirth: e.target.value})} style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }} />
                     </div>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 6, display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number</label>
+                    <input type="text" className="form-input" placeholder="Enter phone number" value={studentForm.phone} onChange={e => setStudentForm({...studentForm, phone: e.target.value})} style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }} />
                   </div>
                   <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
                     <div style={{ flex: 1 }}>

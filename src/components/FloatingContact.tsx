@@ -14,7 +14,7 @@ export default function FloatingContact() {
     }}>
       {/* Instagram Button */}
       <a 
-        href="https://instagram.com/smartwheelsskating" 
+        href="https://www.instagram.com/_smartwheels?igsh=M2Z0b2gybGpibWc=" 
         target="_blank" 
         rel="noopener noreferrer"
         style={{
@@ -45,7 +45,7 @@ export default function FloatingContact() {
 
       {/* WhatsApp Button */}
       <a 
-        href="https://wa.me/919876543210" 
+        href="https://wa.me/919188414160" 
         target="_blank" 
         rel="noopener noreferrer"
         style={{

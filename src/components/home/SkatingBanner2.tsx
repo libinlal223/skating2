@@ -29,7 +29,7 @@ export default function SkatingBanner2() {
       {/* Parallax image */}
       <motion.div style={{ position: 'absolute', inset: '-10%', y }}>
         <Image
-          src="/skating_banner2.png"
+          src="/skating_banner2_ai.png"
           alt="SmartWheels students training together"
           fill
           style={{ objectFit: 'cover', objectPosition: 'center 40%' }}

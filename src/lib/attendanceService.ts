@@ -77,17 +77,18 @@ export const saveAttendance = async (
 };
 
 // ─── getAttendanceByBranch ────────────────────────────────────────────────────
-// Fetches ALL records for a given branch.
-// Mirrors the old getAttendance() shape so existing useMemo filters keep working.
+// Fetches records for a given branch, optionally filtered by month.
+// When month is provided, only that month's records are returned (fewer reads).
 
 export const getAttendanceByBranch = async (
-  branchId: string
+  branchId: string,
+  month?: string
 ): Promise<AttendanceRecord[]> => {
   try {
     const colRef = collection(db, COLLECTION);
-    const snap = await getDocs(
-      query(colRef, where('branchId', '==', branchId))
-    );
+    const constraints = [where('branchId', '==', branchId)];
+    if (month) constraints.push(where('month', '==', month));
+    const snap = await getDocs(query(colRef, ...constraints));
     return snap.docs.map(d => ({ id: d.id, ...d.data() } as AttendanceRecord));
   } catch (error) {
     console.error('[getAttendanceByBranch] Firestore error:', error);

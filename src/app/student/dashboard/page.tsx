@@ -108,6 +108,9 @@ export default function StudentDashboard() {
             {student?.branchId && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><MapPin size={16} color="var(--accent-red)"/> {student.branchId}</div>
             )}
+            {student?.dateOfBirth && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Calendar size={16} color="var(--accent-red)"/> DOB: {student.dateOfBirth}</div>
+            )}
           </div>
         </motion.div>
 

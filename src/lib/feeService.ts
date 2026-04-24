@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, doc, setDoc, updateDoc, getDoc, orderBy, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, setDoc, updateDoc, getDoc, orderBy, serverTimestamp, deleteDoc, writeBatch } from 'firebase/firestore';
 import { db } from './firebase';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -40,6 +40,28 @@ export const getStudentFees = async (studentId: string): Promise<FeeRecord[]> =>
     });
   } catch (error) {
     console.error('[getStudentFees] Firestore error:', error);
+    throw error;
+  }
+};
+
+// ─── getAllFees ────────────────────────────────────────────────────────────────
+// Fetch ALL fee documents in a single query (replaces N per-student queries).
+// Results are sorted by month descending so latest months appear first.
+
+export const getAllFees = async (): Promise<FeeRecord[]> => {
+  try {
+    const feesRef = collection(db, 'student_fees');
+    const snapshot = await getDocs(feesRef);
+    return snapshot.docs.map(d => {
+      const data = d.data();
+      return {
+        id: d.id,
+        ...data,
+        balance: Math.max((data.total || 0) - (data.paid || 0), 0)
+      } as FeeRecord;
+    }).sort((a, b) => b.month.localeCompare(a.month));
+  } catch (error) {
+    console.error('[getAllFees] Firestore error:', error);
     throw error;
   }
 };
@@ -226,33 +248,27 @@ export const payMultipleMonths = async (
   monthlyFee: number
 ): Promise<void> => {
   try {
+    const batch = writeBatch(db);
+    const now = new Date().toISOString();
+
     for (let i = 0; i < duration; i++) {
       const currentMonth = addMonths(startMonth, i);
       const docId = `${studentId}_${currentMonth}`;
       const docRef = doc(db, 'student_fees', docId);
-      const snap = await getDoc(docRef);
 
-      if (snap.exists()) {
-        const existing = snap.data() as FeeRecord;
-        const totalToUse = existing.total || monthlyFee;
-        await updateDoc(docRef, {
-          paid: totalToUse,
-          status: 'paid',
-          updatedAt: new Date().toISOString()
-        });
-      } else {
-        await setDoc(docRef, {
-          studentId,
-          branchId,
-          month: currentMonth,
-          total: monthlyFee,
-          paid: monthlyFee,
-          status: 'paid',
-          createdAt: serverTimestamp(),
-          updatedAt: new Date().toISOString()
-        });
-      }
+      // Use set with merge — works for both create and update
+      batch.set(docRef, {
+        studentId,
+        branchId,
+        month: currentMonth,
+        total: monthlyFee,
+        paid: monthlyFee,
+        status: 'paid',
+        updatedAt: now,
+      }, { merge: true });
     }
+
+    await batch.commit();
   } catch (error) {
     console.error('[payMultipleMonths] Firestore error:', error);
     throw error;

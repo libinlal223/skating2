@@ -77,12 +77,17 @@ async function buildAppUser(firebaseUser: FirebaseUser): Promise<AppUser> {
   let finalBranchId = data.branchId ?? fetchedBranchId ?? undefined;
   
   if (finalBranchId) {
-    try {
-      const branchSnap = await getDocs(collection(db, 'branches'));
-      const branches = branchSnap.docs.map(d => ({ id: d.id, name: (d.data() as any).name || '' }));
-      finalBranchId = normalizeBranchId(finalBranchId, branches);
-    } catch (err) {
-      console.error('[buildAppUser] Error fetching branches to normalize:', err);
+    // Skip normalization if branchId looks like a valid doc ID (e.g. B1, B2...)
+    // Only normalize legacy name-based branchIds to avoid an extra collection read
+    const looksLikeDocId = /^B\d+$/i.test(finalBranchId);
+    if (!looksLikeDocId) {
+      try {
+        const branchSnap = await getDocs(collection(db, 'branches'));
+        const branches = branchSnap.docs.map(d => ({ id: d.id, name: (d.data() as any).name || '' }));
+        finalBranchId = normalizeBranchId(finalBranchId, branches);
+      } catch (err) {
+        console.error('[buildAppUser] Error fetching branches to normalize:', err);
+      }
     }
   }
 

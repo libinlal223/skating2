@@ -46,6 +46,7 @@ export interface StudentProfile {
   branchId: string;
   branch?: string;      // branch name (display)
   age?: string;
+  dateOfBirth?: string;
   phone?: string;
   monthlyFee?: number;
   batch?: string;
@@ -109,6 +110,7 @@ export const getAllStudents = async (): Promise<StudentProfile[]> => {
         branchId: resolvedBranchId,
         branch: branchName,
         age: data.age || '',
+        dateOfBirth: data.dateOfBirth || '',
         monthlyFee: data.monthlyFee || 6000,
         password: data.password || '',
         batch: data.batch || '',
@@ -117,6 +119,39 @@ export const getAllStudents = async (): Promise<StudentProfile[]> => {
     });
   } catch (error) {
     console.error('[getAllStudents] Firestore error:', error);
+    throw error;
+  }
+};
+
+// ─── getStudentsByBranch ──────────────────────────────────────────────────────
+// Fetch students for a single branch only (fewer reads for instructor view).
+
+export const getStudentsByBranch = async (branchId: string): Promise<StudentProfile[]> => {
+  try {
+    const { query, where } = await import('firebase/firestore');
+    const snap = await getDocs(query(collection(db, 'students'), where('branchId', '==', branchId)));
+    return snap.docs.map(d => {
+      const data = d.data();
+      return {
+        uid: data.uid || d.id,
+        studentId: data.studentId || d.id,
+        id: data.studentId || d.id,
+        role: 'student' as const,
+        name: data.name || '',
+        email: data.email || '',
+        phone: data.phone || '',
+        branchId: data.branchId || '',
+        branch: data.branch || '',
+        age: data.age || '',
+        dateOfBirth: data.dateOfBirth || '',
+        monthlyFee: data.monthlyFee || 6000,
+        password: data.password || '',
+        batch: data.batch || '',
+        createdAt: data.createdAt || '',
+      };
+    });
+  } catch (error) {
+    console.error('[getStudentsByBranch] Firestore error:', error);
     throw error;
   }
 };
@@ -153,6 +188,7 @@ export interface CreateStudentInput {
   branchId?: string;
   branch?: string;
   age?: string;
+  dateOfBirth?: string;
   monthlyFee?: number;
 }
 
@@ -167,7 +203,7 @@ export interface CreatedStudentCredentials {
 export const createStudentAccount = async (
   input: CreateStudentInput
 ): Promise<CreatedStudentCredentials> => {
-  const { studentId, name, phone, password, branchId, branch, age, monthlyFee } = input;
+  const { studentId, name, phone, password, branchId, branch, age, dateOfBirth, monthlyFee } = input;
 
   // 1. Generate email from phone number
   const email = `${studentId}@smartwheels.com`;
@@ -207,6 +243,7 @@ export const createStudentAccount = async (
     branchId: branchId || '',
     branch: branch || branchId || '',
     age: age || '',
+    dateOfBirth: dateOfBirth || '',
     monthlyFee: monthlyFee || 6000,
     createdAt: serverTimestamp(),
   };
@@ -223,6 +260,7 @@ export const createStudentAccount = async (
     branchId: branchId || '',
     branch: branch || branchId || '',
     age: age || '',
+    dateOfBirth: dateOfBirth || '',
     monthlyFee: monthlyFee || 6000,
     createdAt: serverTimestamp(),
   });

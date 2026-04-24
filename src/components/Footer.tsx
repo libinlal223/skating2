@@ -35,9 +35,9 @@ export default function Footer() {
               Professional skating training for all ages. Building champions since 2019.
             </p>
             <div className="footer__socials">
-              <a href="#" className="footer__social-link" aria-label="Instagram"><Instagram size={18} /></a>
-              <a href="#" className="footer__social-link" aria-label="Facebook"><Facebook size={18} /></a>
-              <a href="#" className="footer__social-link" aria-label="YouTube"><Youtube size={18} /></a>
+              <a href="https://www.instagram.com/_smartwheels?igsh=M2Z0b2gybGpibWc=" target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="Instagram"><Instagram size={18} /></a>
+              <a href="https://www.facebook.com/share/1D1eAMmEFj/" target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="Facebook"><Facebook size={18} /></a>
+              <a href="https://youtube.com/@smartwheelsskatingacademy?si=T_Nms-CiDv-_YUJv" target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="YouTube"><Youtube size={18} /></a>
             </div>
           </div>
 
@@ -53,18 +53,22 @@ export default function Footer() {
           {/* Contact */}
           <div className="footer__col">
             <h5 className="footer__col-title">Contact Us</h5>
-            <a href="tel:+911234567890" className="footer__link footer__contact-link">
+            <a href="tel:+917356584160" className="footer__link footer__contact-link">
               <Phone size={14} />
-              +91 123 456 7890
+              +91 73565 84160
             </a>
-            <a href="mailto:info@smartwheels.com" className="footer__link footer__contact-link">
+            <a href="tel:+916282489291" className="footer__link footer__contact-link">
+              <Phone size={14} />
+              +91 62824 89291
+            </a>
+            <a href="tel:+919188414160" className="footer__link footer__contact-link">
+              <Phone size={14} />
+              +91 91884 14160
+            </a>
+            <a href="mailto:smartwheelsskating@gmail.com" className="footer__link footer__contact-link">
               <Mail size={14} />
-              info@smartwheels.com
+              smartwheelsskating@gmail.com
             </a>
-            <span className="footer__link footer__contact-link">
-              <MapPin size={14} />
-              Mumbai, India
-            </span>
           </div>
         </div>
 

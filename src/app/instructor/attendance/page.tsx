@@ -7,8 +7,6 @@ import { getCurrentUser, logout as authLogout } from '@/lib/authService';
 import { getAllStudents } from '@/lib/studentService';
 import { getAllBranches } from '@/lib/branchService';
 import { saveAttendance, getAttendanceByBranch, AttendanceRecord } from '@/lib/attendanceService';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 
 export default function AttendanceSetup() {
   const router = useRouter();
@@ -156,64 +154,52 @@ export default function AttendanceSetup() {
 
   const [monthlyReportData, setMonthlyReportData] = useState<{student: any, sessions: ('present' | 'absent' | null)[], presentCount: number}[]>([]);
 
-  // Build monthly report by directly querying Firestore
-  const fetchMonthlyReport = useCallback(async () => {
+  // Build monthly report from already-fetched allAttendance state (no extra Firestore query)
+  const fetchMonthlyReport = useCallback(() => {
     if (!selectedBranchId) {
       setMonthlyReportData([]);
       return;
     }
     const selectedMonth = monthKey;
-    try {
-      // 1. Fetch from collection: attendance_records
-      const colRef = collection(db, 'attendance_records');
-      // 2. Query
-      const q = query(
-        colRef,
-        where('branchId', '==', selectedBranchId),
-        where('month', '==', selectedMonth)
-      );
-      const snap = await getDocs(q);
-      const monthRecords = snap.docs.map(doc => doc.data() as AttendanceRecord);
 
-      // 3. After fetching: Sort by sessionNumber ascending
-      monthRecords.sort((a, b) => a.sessionNumber - b.sessionNumber);
+    // Filter from existing state instead of querying Firestore again
+    const monthRecords = allAttendance
+      .filter(r => r.branchId === selectedBranchId && r.month === selectedMonth)
+      .sort((a, b) => a.sessionNumber - b.sessionNumber);
 
-      // 4. Determine dynamic session count from actual records
-      const totalSessions = monthRecords.length > 0
-        ? Math.max(...monthRecords.map(r => r.sessionNumber))
-        : 0;
+    // Determine dynamic session count from actual records
+    const totalSessions = monthRecords.length > 0
+      ? Math.max(...monthRecords.map(r => r.sessionNumber))
+      : 0;
 
-      // Map results mapping sessionNumber 1 -> S1 ... N -> SN (dynamic)
-      const report = currentStudents.map(student => {
-        const sessions = Array.from({ length: totalSessions }, (_, i) => {
-          const sessionNum = i + 1;
-          const rec = monthRecords.find(r => r.sessionNumber === sessionNum);
-          
-          // Fill missing sessions as null
-          if (!rec) return null; 
+    // Map results mapping sessionNumber 1 -> S1 ... N -> SN (dynamic)
+    const report = currentStudents.map(student => {
+      const sessions = Array.from({ length: totalSessions }, (_, i) => {
+        const sessionNum = i + 1;
+        const rec = monthRecords.find(r => r.sessionNumber === sessionNum);
+        
+        // Fill missing sessions as null
+        if (!rec) return null; 
 
-          // 5. For each session: Find studentId inside attendance array
-          const found = rec.attendance.find(a => a.studentId === student.id);
-          
-          // Set status = present / absent
-          return found ? found.status : 'absent';
-        });
-
-        // 6. Ensure total calculation works
-        const presentCount = sessions.filter(s => s === 'present').length;
-        return { student, sessions, presentCount };
+        // For each session: Find studentId inside attendance array
+        const found = rec.attendance.find(a => a.studentId === student.id);
+        
+        // Set status = present / absent
+        return found ? found.status : 'absent';
       });
 
-      setMonthlyReportData(report);
-    } catch (err) {
-      console.error('Failed to fetch monthly report:', err);
-    }
-  }, [selectedBranchId, monthKey, currentStudents]);
+      // Ensure total calculation works
+      const presentCount = sessions.filter(s => s === 'present').length;
+      return { student, sessions, presentCount };
+    });
 
-  // Fetch report whenever dependencies change (allAttendance acts as a re-fetch trigger when attendance is saved)
+    setMonthlyReportData(report);
+  }, [selectedBranchId, monthKey, currentStudents, allAttendance]);
+
+  // Re-build report whenever dependencies change
   useEffect(() => {
     fetchMonthlyReport();
-  }, [fetchMonthlyReport, allAttendance]);
+  }, [fetchMonthlyReport]);
 
   // Handle toggling a session in the monthly report edit mode
   const handleToggleSessionReport = async (studentId: string, sessionIndex: number) => {

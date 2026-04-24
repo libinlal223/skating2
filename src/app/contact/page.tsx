@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle, Instagram, Youtube, Facebook } from 'lucide-react';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
@@ -56,9 +56,12 @@ export default function ContactPage() {
             <h2 style={{ marginBottom: 'var(--space-4)', fontSize: '2rem' }}>Academy <span className="gradient-text">Info</span></h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
               {[
-                { icon: Phone, label: 'Phone', value: '+91 123 456 7890', href: 'tel:+911234567890' },
-                { icon: Mail, label: 'Email', value: 'info@smartwheels.com', href: 'mailto:info@smartwheels.com' },
-                { icon: MapPin, label: 'Address', value: 'Mahalaxmi Sports Complex, Mumbai, India', href: '#' },
+                { icon: Phone, label: 'Phone', value: '+91 73565 84160 / +91 62824 89291 / +91 91884 14160', href: 'tel:+917356584160' },
+                { icon: Mail, label: 'Email', value: 'smartwheelsskating@gmail.com', href: 'mailto:smartwheelsskating@gmail.com' },
+                { icon: Instagram, label: 'Instagram', value: '@_smartwheels', href: 'https://www.instagram.com/_smartwheels?igsh=M2Z0b2gybGpibWc=' },
+                { icon: Youtube, label: 'YouTube', value: 'Smartwheels Skating Academy', href: 'https://youtube.com/@smartwheelsskatingacademy?si=T_Nms-CiDv-_YUJv' },
+                { icon: Facebook, label: 'Facebook', value: 'Smartwheels', href: 'https://www.facebook.com/share/1D1eAMmEFj/' },
+                { icon: MapPin, label: 'Branches', value: 'Anchal • Puthenkulam • Kalluvathukkal', href: '/branches' },
               ].map((info, i) => (
                 <a key={i} href={info.href} style={{ display: 'flex', alignItems: 'flex-start', gap: 16, padding: 'var(--space-3)', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 'var(--radius-lg)', transition: 'all 0.3s', textDecoration: 'none' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(225,6,0,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
@@ -74,7 +77,7 @@ export default function ContactPage() {
               ))}
 
               {/* WhatsApp */}
-              <a href="https://wa.me/911234567890" target="_blank" rel="noopener noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', width: '100%', padding: 'var(--space-2) var(--space-4)', fontSize: '0.9rem', gap: 8, marginTop: 'var(--space-2)' }}>
+              <a href="https://wa.me/919188414160" target="_blank" rel="noopener noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', width: '100%', padding: 'var(--space-2) var(--space-4)', fontSize: '0.9rem', gap: 8, marginTop: 'var(--space-2)' }}>
                 <MessageCircle size={18} /> Chat on WhatsApp
               </a>
             </div>
