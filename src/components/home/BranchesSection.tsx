@@ -2,28 +2,25 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MapPin, Phone, Clock, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, ArrowRight } from 'lucide-react';
 
 const branches = [
   {
     name: 'Anchal',
     location: 'Market jn, Anchal, Kollam, Kerala 691306',
-    mobile: '+91 9876543210',
-    timings: '06:00 AM - 08:00 PM',
+    mobiles: ['+91 9876543210', '+91 9876543211', '+91 9876543212'],
     color: '#E10600',
   },
   {
     name: 'Izyan Sports City Puthenkulam',
     location: 'Puthenkulam, Parippally, Kerala 691302',
-    mobile: '+91 9876543211',
-    timings: '06:00 AM - 08:00 PM',
+    mobiles: ['+91 9876543213', '+91 9876543214', '+91 9876543215'],
     color: '#FFD400',
   },
   {
     name: 'Kalluvathukkal',
     location: 'Kalluvathukkal, Kerala 691578',
-    mobile: '+91 9876543212',
-    timings: '06:00 AM - 08:00 PM',
+    mobiles: ['+91 9876543216', '+91 9876543217', '+91 9876543218'],
     color: '#C0C0C0',
   }
 ];
@@ -71,11 +68,11 @@ export default function BranchesSection() {
                 </div>
                 <div className="branches__card-detail">
                   <Phone size={14} />
-                  <span>{branch.mobile}</span>
-                </div>
-                <div className="branches__card-detail">
-                  <Clock size={14} />
-                  <span>{branch.timings}</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    {branch.mobiles.map((num, idx) => (
+                      <span key={idx}>{num}</span>
+                    ))}
+                  </div>
                 </div>
                 <a href="/branches" className="branches__card-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   View Details <ArrowRight size={16} />

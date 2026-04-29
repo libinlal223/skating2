@@ -1,12 +1,18 @@
 'use client';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MapPin, Clock, Phone } from 'lucide-react';
+import { MapPin, Phone } from 'lucide-react';
+
+const phones = [
+  { label: '+91 73565 84160', href: 'tel:+917356584160' },
+  { label: '+91 62824 89291', href: 'tel:+916282489291' },
+  { label: '+91 91884 14160', href: 'tel:+919188414160' },
+];
 
 const branchData = [
-  { name: 'Anchal', location: 'Market jn, Anchal, Kollam, Kerala 691306', timings: '06:00 AM - 08:00 PM', phone: '+91 9876543210', mapQuery: 'SMARTWHEELS+Skating+Academy,+Market+jn,+Anchal,+Kollam,+Kerala+691306', lat: 8.9288, lng: 76.9048 },
-  { name: 'Izyan Sports City Puthenkulam', location: 'Puthenkulam, Parippally, Kerala 691302', timings: '06:00 AM - 08:00 PM', phone: '+91 9876543211', mapQuery: 'Izyan+Sports+City+%26+Convention+Centre,+Puthenkulam,+Parippally,+Kerala+691302', lat: 8.8105, lng: 76.7323 },
-  { name: 'Kalluvathukkal', location: 'Kalluvathukkal, Kerala 691578', timings: '06:00 AM - 08:00 PM', phone: '+91 9876543212', mapQuery: 'SMARTWHEELS+Skating+Academy,+Kalluvathukkal,+Kerala+691578', lat: 8.8183, lng: 76.7454 },
+  { name: 'Anchal', location: 'Market jn, Anchal, Kollam, Kerala 691306', mapQuery: 'SMARTWHEELS+Skating+Academy,+Market+jn,+Anchal,+Kollam,+Kerala+691306' },
+  { name: 'Izyan Sports City Puthenkulam', location: 'Puthenkulam, Parippally, Kerala 691302', mapQuery: 'Izyan+Sports+City+%26+Convention+Centre,+Puthenkulam,+Parippally,+Kerala+691302' },
+  { name: 'Kalluvathukkal', location: 'Kalluvathukkal, Kerala 691578', mapQuery: 'SMARTWHEELS+Skating+Academy,+Kalluvathukkal,+Kerala+691578' },
 ];
 
 export default function BranchesPage() {
@@ -68,16 +74,21 @@ export default function BranchesPage() {
               <motion.div key={b.name} className="card" initial={{ opacity: 0, y: 40 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={{ padding: 'var(--space-4)', flex: '1 1 300px', maxWidth: '380px', width: '100%' }}>
                 <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', letterSpacing: '0.06em', marginBottom: 'var(--space-3)', color: 'var(--text-primary)' }}>{b.name}</h3>
-                {[
-                  { icon: MapPin, text: b.location },
-                  { icon: Clock, text: b.timings },
-                  { icon: Phone, text: b.phone },
-                ].map((detail, j) => (
-                  <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: 8 }}>
-                    <detail.icon size={16} color="var(--accent-red)" /> {detail.text}
-                  </div>
-                ))}
-                <a href={`tel:${b.phone.replace(/\s/g, '')}`} className="btn btn-primary" style={{ marginTop: 'var(--space-2)', width: '100%', fontSize: '0.8rem' }}>Contact Branch</a>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: 12 }}>
+                  <MapPin size={16} color="var(--accent-red)" style={{ flexShrink: 0, marginTop: 2 }} /> {b.location}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+                  {phones.map((p) => (
+                    <div key={p.href} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                      <Phone size={15} color="var(--accent-red)" style={{ flexShrink: 0 }} />
+                      <a href={p.href} style={{ color: 'var(--text-muted)', textDecoration: 'none' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent-red)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                      >{p.label}</a>
+                    </div>
+                  ))}
+                </div>
+                <a href="tel:+917356584160" className="btn btn-primary" style={{ marginTop: 'var(--space-2)', width: '100%', fontSize: '0.8rem' }}>Contact Branch</a>
               </motion.div>
             ))}
           </div>

@@ -9,8 +9,21 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const text =
+      `*New Enquiry – SmartWheels Skating Academy*\n\n` +
+      `👤 *Name:* ${form.name}\n` +
+      `📞 *Phone:* ${form.phone}\n` +
+      `📧 *Email:* ${form.email}\n` +
+      `💬 *Message:* ${form.message}`;
+
+    window.open(`https://wa.me/919188414160?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setTimeout(() => {
+      setSubmitted(false);
+      setForm({ name: '', phone: '', email: '', message: '' });
+    }, 3000);
   };
 
   return (
@@ -45,8 +58,8 @@ export default function ContactPage() {
                 <label className="form-label">Message</label>
                 <textarea className="form-input" placeholder="Tell us about your skating goals..." value={form.message} onChange={e => setForm({...form, message: e.target.value})} required />
               </div>
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: 'var(--space-2) var(--space-4)', fontSize: '0.9rem', gap: 8 }}>
-                {submitted ? <><CheckCircle size={16} /> Sent Successfully!</> : <><Send size={16} /> Send Message</>}
+              <button type="submit" className="btn" style={{ width: '100%', padding: 'var(--space-2) var(--space-4)', fontSize: '0.9rem', gap: 8, background: submitted ? '#1da851' : '#25D366', color: '#fff', border: 'none', cursor: 'pointer', transition: 'background 0.3s' }}>
+                {submitted ? <><CheckCircle size={16} /> Opening WhatsApp…</> : <><MessageCircle size={16} /> Send via WhatsApp</>}
               </button>
             </form>
           </motion.div>
@@ -80,14 +93,6 @@ export default function ContactPage() {
               <a href="https://wa.me/919188414160" target="_blank" rel="noopener noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', width: '100%', padding: 'var(--space-2) var(--space-4)', fontSize: '0.9rem', gap: 8, marginTop: 'var(--space-2)' }}>
                 <MessageCircle size={18} /> Chat on WhatsApp
               </a>
-            </div>
-
-            {/* Map */}
-            <div style={{ marginTop: 'var(--space-4)', width: '100%', height: 250, borderRadius: 'var(--radius-lg)', background: 'linear-gradient(135deg, rgba(225,6,0,0.08), rgba(255,212,0,0.04))', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
-                <MapPin size={40} strokeWidth={1} color="var(--accent-red)" />
-                <p style={{ fontSize: '0.8rem', marginTop: 8 }}>Google Maps embed area</p>
-              </div>
             </div>
           </motion.div>
         </div>

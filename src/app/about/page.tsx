@@ -21,13 +21,13 @@ const missionPoints = [
 
 
 const reviews = [
-  { name: 'Priya Menon', role: 'Parent of student', stars: 5, text: 'My daughter has transformed completely since joining Smart Wheels. The coaches are incredibly patient and professional. She won her first district medal within 6 months!' },
+  { name: 'Priya Menon', role: 'Parent of student', stars: 5, text: 'My daughter has transformed completely since joining SmartWheels. The coaches are incredibly patient and professional. She won her first district medal within 6 months!' },
   { name: 'Arjun Nair', role: 'Advanced Student', stars: 5, text: 'Train here for 2 years now. The training is world-class and Coach Abhi pushes you to be the best version of yourself. Best academy in Kerala!' },
-  { name: 'Reethu Krishnan', role: 'Parent of student', stars: 5, text: 'The discipline and confidence my son has gained here is priceless. Smart Wheels is not just about skating — it shapes character.' },
+  { name: 'Reethu Krishnan', role: 'Parent of student', stars: 5, text: 'The discipline and confidence my son has gained here is priceless. SmartWheels is not just about skating — it shapes character.' },
   { name: 'Sneha Das', role: 'Intermediate Student', stars: 5, text: 'I came in with zero experience and within a year I was competing at state level. The structured programs really work!' },
   { name: 'Anoop Varma', role: 'Parent of student', stars: 5, text: 'Incredible facilities, dedicated coaches, and a very nurturing environment. My kids absolutely love coming here every day.' },
-  { name: 'Meghna Pillai', role: 'Beginner Student', stars: 5, text: 'The best decision I made was joining Smart Wheels. The community is so supportive and the coaches make learning fun and effective.' },
-  { name: 'Rahul Shenoy', role: 'Parent of student', stars: 5, text: "Avanika's Guinness World Record is proof of what Smart Wheels can achieve. So proud to be part of this amazing academy family!" },
+  { name: 'Meghna Pillai', role: 'Beginner Student', stars: 5, text: 'The best decision I made was joining SmartWheels. The community is so supportive and the coaches make learning fun and effective.' },
+  { name: 'Rahul Shenoy', role: 'Parent of student', stars: 5, text: "Avanika's Guinness World Record is proof of what SmartWheels can achieve. So proud to be part of this amazing academy family!" },
   { name: 'Divya Suresh', role: 'Advanced Student', stars: 5, text: 'Training with Coach Afi has been life-changing. The attention to detail and personalized coaching here is unlike anything else.' },
 ];
 
@@ -59,7 +59,7 @@ export default function AboutPage() {
           style={{ textAlign: 'center', position: 'relative', zIndex: 1, padding: 'var(--space-4)' }}>
           <h1 style={{ marginBottom: 'var(--space-3)' }}>Building <span className="gradient-text">Champions</span> on Wheels</h1>
           <p style={{ maxWidth: 600, margin: '0 auto', fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
-            Smart Wheels has been transforming aspiring skaters into competitive athletes through world-class coaching and state-of-the-art facilities.
+            SmartWheels has been transforming aspiring skaters into competitive athletes through world-class coaching and state-of-the-art facilities.
           </p>
         </motion.div>
       </section>
@@ -81,13 +81,13 @@ export default function AboutPage() {
           {/* Photo — desktop col 1 rows 1–2, mobile order 2 */}
           <motion.div className="about-person-img" initial={{ opacity: 0, x: -40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
             <div style={{ width: '100%', maxWidth: '350px', margin: '0 auto', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <motion.img src="/founder.jpeg" alt="Smart Wheels Founder" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <motion.img src="/founder.jpeg" alt="SmartWheels Founder" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
           </motion.div>
           {/* Body text — desktop col 2 row 2, mobile order 3 */}
           <motion.div className="about-person-body" initial={{ opacity: 0, x: 40 }} animate={inView1 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.25 }}>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
-              Smart Wheels Skating Academy was born from a vision to bring professional-level skating training to aspiring athletes across Kerala. What started as a single training center and has grown into a multi-city academy producing state and national champions.
+              SmartWheels Skating Academy was born from a vision to bring professional-level skating training to aspiring athletes across Kerala. What started as a single training center and has grown into a multi-city academy producing state and national champions.
             </p>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
               Our founder, driven by decades of competitive skating experience, established a training methodology that combines international techniques with personalized coaching, creating a path to excellence for every student.
@@ -114,7 +114,7 @@ export default function AboutPage() {
           {/* Body text — desktop col 1 row 2, mobile order 3 */}
           <motion.div className="about-person-body" initial={{ opacity: 0, x: -40 }} animate={inView6 ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.25 }}>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-3)' }}>
-              Guiding Smart Wheels with a strategic vision, our Managing Director ensures that the academy remains at the forefront of skating education and sports management.
+              Guiding SmartWheels with a strategic vision, our Managing Director ensures that the academy remains at the forefront of skating education and sports management.
             </p>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
               Focused on infrastructure, student welfare, and expanding our reach, the leadership is committed to nurturing an environment where every skater can thrive and achieve their highest potential.
@@ -168,7 +168,7 @@ export default function AboutPage() {
             <h2>Our <span className="gradient-text">Mission</span></h2>
             <div className="divider" />
             <p style={{ maxWidth: '800px', margin: '0 auto var(--space-3)', lineHeight: 1.8 }}>To emerge as a beacon of excellence in skating that shapes confident champions and responsible individuals—nurturing excellence, resilience, and sportsmanship through world-class training, innovation, and unwavering commitment to holistic development.</p>
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>At Smart Wheels Skating Academy, our mission is to:</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>At SmartWheels Skating Academy, our mission is to:</p>
           </motion.div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)', maxWidth: '1100px', margin: '0 auto' }}>
             {missionPoints.map((item, i) => (
