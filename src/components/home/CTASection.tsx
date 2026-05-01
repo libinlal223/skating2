@@ -22,7 +22,7 @@ export default function CTASection() {
           <p style={{ fontSize: '1.1rem', color: 'rgba(10,10,10,0.7)', maxWidth: 500, margin: '0 auto var(--space-5)', lineHeight: 1.7 }}>
             Join hundreds of students who have transformed their skills with SmartWheels Skating Academy.
           </p>
-          <a href="/contact" style={{
+          <a href="https://wa.me/919188414160?text=Hi%20SmartWheels!%20I%27d%20like%20to%20enroll%20in%20your%20skating%20academy.%20Please%20share%20the%20details." target="_blank" rel="noopener noreferrer" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, padding: 'var(--space-2) var(--space-5)',
             background: 'var(--bg-primary)', color: '#F5F5F5', fontFamily: 'var(--font-body)', fontWeight: 600,
             fontSize: '0.95rem', textTransform: 'uppercase' as const, letterSpacing: '0.1em', border: 'none',

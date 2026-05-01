@@ -6,7 +6,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import FloatingContact from "@/components/FloatingContact";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://smartwheelsacademy.com'),
+  metadataBase: new URL('https://smartwheelsskating.com'),
   title: {
     default: 'SmartWheels Skating Academy | Train Like a Champion',
     template: '%s | SmartWheels Skating Academy',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://smartwheelsacademy.com',
+    url: 'https://smartwheelsskating.com',
     siteName: 'SmartWheels Skating Academy',
     title: 'SmartWheels Skating Academy | Train Like a Champion',
     description: 'Kerala\'s premier roller skating academy. Expert coaches, world-class facilities, and a Guinness World Record holder in our ranks.',

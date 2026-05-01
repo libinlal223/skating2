@@ -2,6 +2,11 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /student/dashboard
+Disallow: /instructor/
+Disallow: /reception/
+Disallow: /setup/
 Allow: /student/login
+Allow: /instructor/login
+Allow: /admin/login
 
-Sitemap: https://smartwheelsacademy.com/sitemap.xml
+Sitemap: https://smartwheelsskating.com/sitemap.xml
