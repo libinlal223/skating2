@@ -1,6 +1,7 @@
 'use client';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 
 const galleryItems = [
@@ -78,7 +79,13 @@ export default function GalleryPreview() {
                 transition={{ duration: 0.4 }} onClick={() => setLightbox(item.id)}
                 className="achievement-card"
                 style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', cursor: 'pointer', height: i % 3 === 0 ? 300 : 200, background: `linear-gradient(135deg, ${item.color}20, ${item.color}08)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src={item.image} alt={item.studentName} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} />
+                <img
+                  src={item.image}
+                  alt={item.studentName}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                />
                 {/* Always-visible name & event overlay at bottom */}
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)', padding: '36px 14px 12px', display: 'flex', flexDirection: 'column', gap: 3, pointerEvents: 'none' }}>
                   <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 700, color: '#FFFFFF', textShadow: '0 1px 4px rgba(0,0,0,0.6)', lineHeight: 1.2 }}>{item.studentName}</span>
@@ -112,7 +119,13 @@ export default function GalleryPreview() {
               {(() => {
                 const item = galleryItems.find(g => g.id === lightbox); return item ? (
                   <div style={{ width: '100%', height: '100%', position: 'relative', background: `linear-gradient(135deg, ${item.color}30, ${item.color}10)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={item.image} alt={item.studentName} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: 0 }} />
+                    <Image
+                      src={item.image}
+                      alt={item.studentName}
+                      fill
+                      sizes="(max-width: 768px) 95vw, 800px"
+                      style={{ objectFit: 'contain', zIndex: 0 }}
+                    />
                     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', zIndex: 1, pointerEvents: 'none' }} />
                     <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '0.05em', color: '#F5F5F5', zIndex: 2, position: 'absolute', bottom: 40 }}>{item.studentName}</h3>
                     <p style={{ color: '#DDD', zIndex: 2, position: 'absolute', bottom: 15, display: 'flex', gap: '10px', alignItems: 'center' }}><span>{item.achievement}</span> <span style={{ color: item.color }}>|</span> <span>🏆 {item.award}</span></p>

@@ -55,6 +55,7 @@ export default function GuinnessRecord() {
                 src="/guinness/img1.jpeg"
                 alt="Avanika and Coach Afi with Chief Minister Pinarayi Vijayan"
                 fill
+                sizes="(max-width: 768px) 100vw, 40vw"
                 style={{ objectFit: 'cover' }}
                 priority
               />
@@ -100,7 +101,9 @@ export default function GuinnessRecord() {
                     src={`/guinness/${img.src}`}
                     alt={img.title}
                     fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
                     style={{ objectFit: 'cover' }}
+                    loading="lazy"
                   />
                 </div>
               </motion.div>

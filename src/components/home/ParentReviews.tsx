@@ -3,18 +3,72 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
 const parentReviews = [
-  { name: 'Priya Menon', role: 'Parent', stars: 5, text: 'My daughter has transformed completely since joining SmartWheels. The coaches are incredibly patient and professional. She won her first district medal within 6 months!' },
-  { name: 'Rahul Shenoy', role: 'Parent', stars: 5, text: "Avanika's Guinness World Record is proof of what SmartWheels can achieve. So proud to be part of this amazing academy family!" },
-  { name: 'John David', role: 'Parent', stars: 5, text: 'The discipline and confidence my son has gained here is priceless. SmartWheels is not just about skating — it shapes character.' },
-  { name: 'Sofia Reji', role: 'Parent', stars: 5, text: 'The coaching staff is top-notch. They pay attention to every detail and ensure every child is progressing safely.' },
-  { name: 'Anand Varma', role: 'Parent', stars: 5, text: 'Incredible facilities, dedicated coaches, and a very nurturing environment. My kids absolutely love coming here every day.' },
-  { name: 'Deepa Nair', role: 'Parent', stars: 5, text: 'Highly recommend this academy! The systematic approach to training has helped my daughter become much faster and more confident.' },
-  { name: 'George Kurian', role: 'Parent', stars: 5, text: 'Best skating academy in Kerala. The way they prepare kids for national level competitions is truly commendable.' },
-  { name: 'Meera Krishnan', role: 'Parent', stars: 5, text: 'We have been with SmartWheels for two years. Seeing my son perform at the state level has been a dream come true.' },
-  { name: 'Ajith Kumar', role: 'Parent', stars: 5, text: 'The focus on physical fitness, balance, and sportsmanship is amazing. I can see a positive change in my kid’s overall health.' },
-  { name: 'Sneha Thomas', role: 'Parent', stars: 5, text: 'A great place for beginners and advanced skaters alike. The trainers make learning fun while keeping a strict focus on form.' },
-  { name: 'Rajeev Pillai', role: 'Parent', stars: 5, text: 'I am so happy with the progress my children have made. The academy provides regular feedback and keeps parents involved.' },
-  { name: 'Lakshmi Iyer', role: 'Parent', stars: 5, text: 'Absolutely fantastic! The team spirit and motivation the coaches instil in the students is what makes SmartWheels stand out.' },
+  {
+    name: 'Makesh Mohanan Sreeveni',
+    role: 'Parent',
+    stars: 5,
+    text: 'Thank you SmartWheels for making my daughter this smart, skilful and athletic. It\'s been a year or more that my daughter is training under you guys. She did achieve many goals under your training. You SmartWheels carved my daughter with discipline & skills. This academy is the best. Thank you once again.',
+  },
+  {
+    name: 'Anupama Abhilash',
+    role: 'Parent',
+    stars: 5,
+    text: 'My son recently joined the SmartWheels skating academy, and I\'m really happy with the experience so far. The coaches are very dedicated and put in a lot of effort with each child. I can already see improvement in his confidence and skills. Thank you for your hard work and commitment. Very dedicated coaches and great effort from the team. My son is enjoying and learning a lot. Highly satisfied with SmartWheels skating academy.',
+  },
+  {
+    name: 'Jaheeda Ajeeb',
+    role: 'Parent',
+    stars: 5,
+    text: 'A great skating academy in Kollam. Professional coaching, and visible student\'s progress.',
+  },
+  {
+    name: 'Veena Praveen',
+    role: 'Parent',
+    stars: 5,
+    text: 'Excellent guidance and support by the Masters. Offers numerous physical and mental benefits. There\'s nothing I would change; everything was well-organized and enjoyable. I\'d definitely recommend SmartWheels to anyone who wants to learn skating in a fun and friendly environment!',
+  },
+  {
+    name: 'B Saju',
+    role: 'Parent',
+    stars: 5,
+    text: 'Very appreciative. Well trained and professional trainers. Dedicative and friendly guys. As a parent I am very satisfied. Value for money is best.',
+  },
+  {
+    name: 'Lijin K L',
+    role: 'Parent',
+    stars: 5,
+    text: 'Highly experienced and well-coordinated instructors provide outstanding, specialized coaching in roll ball.',
+  },
+  {
+    name: 'Jiji Sabu',
+    role: 'Parent',
+    stars: 5,
+    text: 'SmartWheels skating class is very good. They teach the children very well.',
+  },
+  {
+    name: 'Devi Rajesh',
+    role: 'Parent',
+    stars: 5,
+    text: 'One and only one of its kind in Kollam — dedicated instructors thriving to mould students both physically and mentally for the sport of skating.',
+  },
+  {
+    name: 'Shyni Rojin',
+    role: 'Parent',
+    stars: 5,
+    text: 'Best coaching in skating and roll ball. Systematic training and a very friendly atmosphere.',
+  },
+  {
+    name: 'Sumi Sibi',
+    role: 'Parent',
+    stars: 5,
+    text: 'SmartWheels skating Kalluvathukkal coaching is very good.',
+  },
+  {
+    name: 'Prasanth Dharmangatha Kurup',
+    role: 'Parent',
+    stars: 5,
+    text: 'Excellent coaching. The coaches are dedicated and friendly, and the learning environment is very positive. This academy is the best in the area. Highly recommend this place.',
+  },
 ];
 
 export default function ParentReviews() {
