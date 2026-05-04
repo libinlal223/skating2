@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Trophy } from 'lucide-react';
-import heroSideBg from '@/assets/hero side bg.png';
+import heroSideBg from '@/assets/main_hero_img1.png';
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
