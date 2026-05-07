@@ -6,6 +6,7 @@ import { LogOut, MapPin, Clock, Calendar, DollarSign, Check, X, AlertCircle, Che
 import { getCurrentUser, logout as authLogout } from '@/lib/authService';
 import { getStudentAttendance, StudentSession } from '@/lib/attendanceService';
 import { getStudentFees, FeeRecord } from '@/lib/feeService';
+import { getStudentProfile } from '@/lib/studentService';
 
 export default function StudentDashboard() {
   const router = useRouter();
@@ -30,7 +31,9 @@ export default function StudentDashboard() {
           router.push('/student/login');
           return;
         }
-        setStudent(appUser);
+        
+        const fullProfile = await getStudentProfile(appUser.uid);
+        setStudent({ ...appUser, ...(fullProfile || {}) });
 
         // Fetch fees from Firestore
         setIsLoadingFees(true);
@@ -105,12 +108,14 @@ export default function StudentDashboard() {
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', margin: '0 0 var(--space-2) 0', lineHeight: 1 }}>{student?.name || 'Unknown Student'}</h1>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><strong style={{ color: 'var(--text-primary)' }}>ID:</strong> {student?.studentId || student?.uid || 'N/A'}</div>
-            {student?.branchId && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><MapPin size={16} color="var(--accent-red)"/> {student.branchId}</div>
+            {(student?.branch || student?.branchId) && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><MapPin size={16} color="var(--accent-red)"/> {student.branch || student.branchId}</div>
             )}
-            {student?.dateOfBirth && (
+            {student?.age ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Calendar size={16} color="var(--accent-red)"/> Age: {student.age}</div>
+            ) : student?.dateOfBirth ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Calendar size={16} color="var(--accent-red)"/> DOB: {student.dateOfBirth}</div>
-            )}
+            ) : null}
           </div>
         </motion.div>
 
