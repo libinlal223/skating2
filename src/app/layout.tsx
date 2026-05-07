@@ -57,6 +57,11 @@ export const metadata: Metadata = {
     description: 'Kerala\'s premier roller skating academy. Train Like a Champion.',
     images: ['/skating_action.png'],
   },
+  icons: {
+    icon: '/logo-modified.png',
+    shortcut: '/logo-modified.png',
+    apple: '/logo-modified.png',
+  },
   robots: { index: true, follow: true },
 };
 
