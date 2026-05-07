@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'About SmartWheels Skating Academy',
     description: 'Our vision, mission, and coaching programs. Producing state and national champions across India.',
     url: 'https://www.smartwheelsskating.com/about',
+    images: [{ url: '/skating_action.png', width: 1200, height: 630, alt: 'SmartWheels Skating Academy' }],
   },
 };
 

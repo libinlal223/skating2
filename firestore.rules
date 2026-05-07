@@ -61,20 +61,18 @@ service cloud.firestore {
     // ─────────────────────────────────────────────────────────────────────────
     // /students/{studentId}
     // - Admins: full access
-    // - Instructors: read-only for students in their branch
+    // - Instructors: full read access to all students
     // - Students: no access
     // ─────────────────────────────────────────────────────────────────────────
     match /students/{studentId} {
-      allow read: if isAdmin() || (
-        isInstructor() && isSameBranch(resource.data.branchId)
-      );
+      allow read: if isAdmin() || isInstructor();
       allow write: if isAdmin();
     }
 
     // ─────────────────────────────────────────────────────────────────────────
     // /attendance_records/{recordId}
     // - Admins: full access
-    // - Instructors: read + create + update for their branch only (no delete)
+    // - Instructors: read + create + update for any branch (no delete)
     // - Students: read-only if their studentId appears in the attendance array
     //
     // NOTE: Firestore rules cannot query inside arrays with "in" semantics.
@@ -84,25 +82,21 @@ service cloud.firestore {
     // your service code, not the rule (Firestore limitation with array fields).
     // ─────────────────────────────────────────────────────────────────────────
     match /attendance_records/{recordId} {
-      allow read: if isAdmin() || (
-        isInstructor() && isSameBranch(resource.data.branchId)
-      ) || (
+      allow read: if isAdmin() || isInstructor() || (
         // Student may read attendance documents for their own branch
         isStudent() && isSameBranch(resource.data.branchId)
       );
 
-      // Instructor can create new session records for their branch
+      // Instructor can create new session records
       allow create: if isInstructor()
-        && isSameBranch(request.resource.data.branchId)
         && request.resource.data.keys().hasAll(['branchId', 'date', 'month', 'sessionNumber', 'attendance'])
         && request.resource.data.branchId is string
         && request.resource.data.date is string
         && request.resource.data.month is string
         && request.resource.data.sessionNumber is number;
 
-      // Instructor can update (overwrite attendance array) only for their branch
+      // Instructor can update (overwrite attendance array)
       allow update: if isInstructor()
-        && isSameBranch(resource.data.branchId)
         // Prevent changing branchId or date on update
         && request.resource.data.branchId == resource.data.branchId
         && request.resource.data.date == resource.data.date;
@@ -129,12 +123,12 @@ service cloud.firestore {
     // ─────────────────────────────────────────────────────────────────────────
     // /branches/{branchId}
     // - Admins: full access
-    // - Instructors: read their own branch only
+    // - Instructors: read all branches
     // - Students: read their own branch only
     // ─────────────────────────────────────────────────────────────────────────
     match /branches/{branchId} {
-      allow read: if isAdmin() || (
-        request.auth != null && isSameBranch(branchId)
+      allow read: if isAdmin() || isInstructor() || (
+        isStudent() && isSameBranch(branchId)
       );
       allow write: if isAdmin();
     }

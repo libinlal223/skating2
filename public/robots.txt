@@ -9,4 +9,4 @@ Allow: /student/login
 Allow: /instructor/login
 Allow: /admin/login
 
-Sitemap: https://smartwheelsskating.com/sitemap.xml
+Sitemap: https://www.smartwheelsskating.com/sitemap.xml

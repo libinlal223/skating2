@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   description: 'Professional skating training for all ages with certified coaches and world-class facilities. Join SmartWheels Skating Academy — Kerala\'s premier roller skating academy.',
 
   keywords: [
+    'smartwheels',
+    'smartwheelsskating',
+    'smartwheels skating',
     'skating academy',
     'roller skating Kerala',
     'skating training',

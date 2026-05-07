@@ -1,7 +1,11 @@
 'use client';
 import { Instagram } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function FloatingContact() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/instructor') || pathname?.startsWith('/student')) return null;
   return (
     <div style={{
       position: 'fixed',

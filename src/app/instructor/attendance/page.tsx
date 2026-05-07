@@ -10,7 +10,6 @@ import { saveAttendance, getAttendanceByBranch, AttendanceRecord } from '@/lib/a
 
 export default function AttendanceSetup() {
   const router = useRouter();
-  const [instructorBranchId, setInstructorBranchId] = useState<string>('');
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null); // branch name
   const [selectedBranchId, setSelectedBranchId] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -38,8 +37,6 @@ export default function AttendanceSetup() {
           router.push('/instructor/login');
           return;
         }
-        setInstructorBranchId(appUser.branchId || '');
-
         // Set default date to today
         const today = new Date();
         const offset = today.getTimezoneOffset();

@@ -8,19 +8,19 @@ const branches = [
   {
     name: 'Anchal',
     location: 'Market jn, Anchal, Kollam, Kerala 691306',
-    mobiles: ['+91 9876543210', '+91 9876543211', '+91 9876543212'],
+    mobiles: ['+91 73565 84160', '+91 62824 89291', '+91 91884 14160'],
     color: '#E10600',
   },
   {
     name: 'Izyan Sports City Puthenkulam',
     location: 'Puthenkulam, Parippally, Kerala 691302',
-    mobiles: ['+91 9876543213', '+91 9876543214', '+91 9876543215'],
+    mobiles: ['+91 73565 84160', '+91 62824 89291', '+91 91884 14160'],
     color: '#FFD400',
   },
   {
     name: 'Kalluvathukkal',
     location: 'Kalluvathukkal, Kerala 691578',
-    mobiles: ['+91 9876543216', '+91 9876543217', '+91 9876543218'],
+    mobiles: ['+91 73565 84160', '+91 62824 89291', '+91 91884 14160'],
     color: '#C0C0C0',
   }
 ];

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'SmartWheels Gallery — Skaters in Action',
     description: 'Photos and videos from our training sessions, competitions, and the Guinness World Record ceremony.',
     url: 'https://www.smartwheelsskating.com/gallery',
+    images: [{ url: '/skating_action.png', width: 1200, height: 630, alt: 'SmartWheels Skating Academy' }],
   },
 };
 

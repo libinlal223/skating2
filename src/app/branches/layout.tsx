@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'SmartWheels Branches Across India',
     description: 'Find your nearest SmartWheels skating center. Expert coaches, structured programs, and world-class facilities.',
     url: 'https://www.smartwheelsskating.com/branches',
+    images: [{ url: '/skating_action.png', width: 1200, height: 630, alt: 'SmartWheels Skating Academy' }],
   },
 };
 
