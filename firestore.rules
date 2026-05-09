@@ -134,6 +134,16 @@ service cloud.firestore {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
+    // /schools/{schoolId}
+    // - Authenticated users: read access
+    // - Admins: full access
+    // ─────────────────────────────────────────────────────────────────────────
+    match /schools/{schoolId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
     // DENY ALL — catch-all for any collection not listed above
     // ─────────────────────────────────────────────────────────────────────────
     match /{document=**} {
