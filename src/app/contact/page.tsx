@@ -36,8 +36,21 @@ export default function ContactPage() {
         </motion.div>
       </section>
 
-      <section style={{ background: 'var(--bg-secondary)', padding: 'var(--space-12) var(--space-4)' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 'var(--space-8)' }}>
+      <section className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: var(--space-8);
+          }
+          @media (max-width: 768px) {
+            .contact-grid {
+              grid-template-columns: 1fr;
+              gap: var(--space-6);
+            }
+          }
+        `}} />
+        <div className="container contact-grid">
           {/* Form */}
           <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
             <h2 style={{ marginBottom: 'var(--space-4)', fontSize: '2rem' }}>Send us a <span className="gradient-text">Message</span></h2>

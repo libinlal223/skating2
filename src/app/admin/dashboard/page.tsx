@@ -999,7 +999,7 @@ export default function AdminDashboard() {
               style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 500, background: 'var(--bg-secondary)', border: '1px solid rgba(255,255,255,0.1)', overflow: 'visible' }}
             >
               {/* All content wrapped at z-index 1 to sit above card::before */}
-              <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{ position: 'relative', zIndex: 1, maxHeight: '80vh', overflowY: 'auto', paddingRight: '4px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 'var(--space-3)' }}>
                   <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', letterSpacing: '0.05em' }}>{isEditing ? 'Edit Student' : 'Add Student'}</h3>
                   <button type="button" onClick={() => { setShowStudentModal(false); setCreateError(null); }} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 8, display: 'flex', alignItems: 'center', zIndex: 2 }}><X size={20} /></button>
@@ -1304,6 +1304,7 @@ export default function AdminDashboard() {
         .hover-btn-yellow:hover { background: rgba(255,212,0,0.2) !important; }
         .hover-btn-red:hover { background: rgba(225,6,0,0.2) !important; }
         .hover-card-grow:active { transform: translateY(-4px) scale(0.98); }
+        .scrollable-modal { max-height: 90vh; overflow-y: auto !important; }
       `}} />
     </div>
   );
