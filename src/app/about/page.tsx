@@ -32,12 +32,11 @@ const reviews = [
 ];
 
 export default function AboutPage() {
-  const ref1 = useRef(null), ref2 = useRef(null), ref3 = useRef(null), ref4 = useRef(null), ref5 = useRef(null), ref6 = useRef(null);
+  const ref1 = useRef(null), ref2 = useRef(null), ref3 = useRef(null), ref5 = useRef(null), ref6 = useRef(null);
   const inView1 = useInView(ref1, { once: true, margin: '-80px' });
   const inView6 = useInView(ref6, { once: true, margin: '-80px' });
   const inView2 = useInView(ref2, { once: true, margin: '-80px' });
   const inView3 = useInView(ref3, { once: true, margin: '-80px' });
-  const inView4 = useInView(ref4, { once: true, margin: '-80px' });
   const inView5 = useInView(ref5, { once: true, margin: '-60px' });
 
   const [schools, setSchools] = useState<SchoolProfile[]>([]);
@@ -235,75 +234,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Coaching Fees & Student Packages Section */}
-      <section ref={ref4} style={{ background: 'var(--bg-primary)', padding: 'var(--space-12) var(--space-4)' }}>
-        <div className="container">
-          <motion.div className="section-title" initial={{ opacity: 0, y: 40 }} animate={inView4 ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
-            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: '#FFD400', letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>Programs & Pricing</span>
-            <h2>Coaching Fees & <span className="gradient-text">Student Packages</span></h2>
-            <div className="divider" />
-            <p>We offer flexible coaching programs tailored for schools and students, ensuring quality training and participation in major events.</p>
-          </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
-            <motion.div className="card" initial={{ opacity: 0, y: 30 }} animate={inView4 ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 }}>
-              <div style={{ padding: '4px 12px', background: 'rgba(225,6,0,0.1)', color: 'var(--accent-red)', borderRadius: '4px', display: 'inline-block', fontWeight: 600, fontSize: '0.8rem', marginBottom: 'var(--space-2)' }}>MOST POPULAR</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: 'var(--space-1)' }}>FULL DAY</h3>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: 'var(--space-3)' }}>
-                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>₹10,000</span>
-              </div>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>Includes Annual Day Dance Performance, Participation in School Rallies, and Roller Skating Skill Development.</p>
-            </motion.div>
-
-            <motion.div className="card" initial={{ opacity: 0, y: 30 }} animate={inView4 ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.2 }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: 'var(--space-1)', marginTop: '28px' }}>HALF DAY</h3>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: 'var(--space-3)' }}>
-                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>₹8,000</span>
-              </div>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>Includes Annual Day Dance Performance and Independence Day Rally Performance.</p>
-            </motion.div>
-
-            <motion.div className="card" initial={{ opacity: 0, y: 30 }} animate={inView4 ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.3 }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: 'var(--space-1)', marginTop: '28px' }}>1.5 HOURS</h3>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: 'var(--space-3)' }}>
-                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>₹6,000</span>
-              </div>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>(Minimum 30 students per batch)</p>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={inView4 ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            style={{
-              background: 'linear-gradient(135deg, rgba(225,6,0,0.1), rgba(255,212,0,0.05))',
-              border: '1px solid rgba(225,6,0,0.2)',
-              borderRadius: 'var(--radius-xl)',
-              padding: 'var(--space-6)',
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto'
-            }}
-          >
-            <h3 style={{ fontSize: '1.8rem', marginBottom: 'var(--space-4)', color: 'var(--text-primary)' }}>STUDENT PACKAGES</h3>
-            <div className="about-packages-row" style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', marginBottom: 'var(--space-4)' }}>
-              <div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Monthly</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 700, color: '#FFD400' }}>₹300<span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}> /student</span></div>
-              </div>
-              <div className="about-packages-divider" style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
-              <div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Yearly</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 700, color: '#E10600' }}>₹2,500<span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}> /year</span></div>
-              </div>
-            </div>
-            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', display: 'inline-block', background: 'rgba(255,255,255,0.05)', padding: '8px 24px', borderRadius: '99px' }}>
-              ✨ Includes participation in Annual Day Dance and School Events.
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
     </>
   );
